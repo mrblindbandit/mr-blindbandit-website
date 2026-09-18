@@ -1,0 +1,12 @@
+Mr. Blindbandit — Official links for media and collaborators
+
+Official artist website: https://mrblindbandit.net/
+Music and discography: https://mrblindbandit.net/music/
+Artist-supplied biography: https://mrblindbandit.net/biography/
+Blindbandit Records: https://mrblindbandit.net/label/
+Press materials: https://mrblindbandit.net/press/assets/
+
+Suggested attribution: Mr. Blindbandit — official website
+HTML: <a href="https://mrblindbandit.net/">Mr. Blindbandit — official website</a>
+
+For photo permissions and interview inquiries: business@mrblindbandit.net

@@ -1,0 +1,106 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0c0d0b">
+<title>Social Admin Control Center | Blindbandit Mobile</title>
+<link rel="icon" href="/assets/blindbandit-records-gold.jpeg">
+<link rel="stylesheet" href="/styles.css?v=phase33"><link rel="stylesheet" href="/public-modern.css?v=phase34">
+<link rel="stylesheet" href="/mobile/mobile.css?v=2"><link rel="stylesheet" href="/mobile/admin/admin.css?v=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Private Blindbandit Mobile moderation and operations console.">
+<link rel="canonical" href="https://mrblindbandit.net/mobile/admin/">
+</head>
+<body class="mb-app mb-admin">
+<a class="mb-skip" href="#admin-main">Skip to admin</a>
+<header class="mb-top">
+  <a class="brand" href="/mobile/admin/"><img src="/assets/app-icon-gold-black-v1.jpg" alt="" width="36" height="36">Social Admin</a>
+  <nav aria-label="Admin">
+    <a href="/mobile/">← Mobile</a>
+    <a href="/portal/control-center/">Platform CC</a>
+    <a href="/sign-in?redirect_url=%2Fmobile%2Fadmin%2F">Clerk sign-in</a>
+  </nav>
+</header>
+<main id="admin-main" class="mb-shell admin-shell" tabindex="-1">
+  <div class="mb-banner admin-hero">
+    <img src="/assets/mobile-logo-gold.jpeg" alt="" class="admin-hero-logo" width="72" height="72">
+    <div>
+      <p class="mb-gold" style="letter-spacing:.1em;font-size:.75rem;margin:0">BLINDBANDIT RECORDS · OPERATIONS</p>
+      <h1 style="margin:.35rem 0">Social Admin Control Center</h1>
+      <p class="mb-muted" id="admin-who">Checking moderator access with your Clerk session…</p>
+    </div>
+  </div>
+  <div id="admin-denied" class="mb-card" hidden>
+    <h2>Access restricted</h2>
+    <p>This console is limited to Blindbandit Records operators and designated moderators. Sign in with the production Clerk account that holds moderator privileges.</p>
+    <p><a class="mb-btn primary" href="/sign-in?redirect_url=%2Fmobile%2Fadmin%2F">Sign in with Clerk</a></p>
+  </div>
+  <div id="admin-app" hidden>
+    <section class="admin-stats mb-card" id="admin-overview" aria-live="polite">Loading overview…</section>
+    <div class="admin-grid">
+      <section class="mb-card">
+        <h2>Find users</h2>
+        <form id="user-search" class="mb-form">
+          <label for="uq">Handle, email, name, or profile id</label>
+          <input id="uq" name="q" autocomplete="off">
+          <button class="mb-btn primary" type="submit">Search</button>
+        </form>
+        <div id="user-results" class="admin-list"></div>
+      </section>
+      <section class="mb-card" id="user-panel">
+        <h2>Selected account</h2>
+        <p class="mb-muted">Search and select a profile to moderate.</p>
+      </section>
+    </div>
+    <div class="admin-grid">
+      <section class="mb-card">
+        <h2>Reports</h2>
+        <button type="button" class="mb-btn" id="load-reports">Refresh open reports</button>
+        <div id="report-list" class="admin-list"></div>
+      </section>
+      <section class="mb-card">
+        <h2>Verification queue</h2>
+        <button type="button" class="mb-btn" id="load-verify">Refresh pending</button>
+        <div id="verify-list" class="admin-list"></div>
+      </section>
+    </div>
+    <div class="admin-grid">
+      <section class="mb-card">
+        <h2>Ads marketplace review</h2>
+        <button type="button" class="mb-btn" id="load-ads">Refresh pending ads</button>
+        <div id="ads-list" class="admin-list"></div>
+      </section>
+      <section class="mb-card mb-form">
+        <h2>System broadcast</h2>
+        <label for="bt">Title</label><input id="bt" maxlength="120">
+        <label for="bb">Body</label><textarea id="bb" maxlength="2000"></textarea>
+        <button type="button" class="mb-btn primary" id="broadcast">Publish announcement</button>
+        <p id="broadcast-status" class="mb-muted" role="status"></p>
+      </section>
+    </div>
+    <section class="mb-card">
+      <h2>Admin audit log</h2>
+      <button type="button" class="mb-btn" id="load-audit">Load recent actions</button>
+      <pre id="audit-log" class="admin-pre"></pre>
+    </section>
+  </div>
+<section class="mb-card desk-static" data-desk-static="1">
+<p class="mb-gold" style="letter-spacing:.08em;font-size:.75rem;margin:0">BLINDBANDIT MOBILE</p>
+<h1 style="margin:.4rem 0">Social Admin Control Center</h1>
+<p class="mb-muted">Moderator console for Blindbandit Mobile: users, reports, ads review, verification queue, push, and audit.</p>
+<p class="mb-muted">Blindbandit Mobile is the social network for fans and creators around Mr. Blindbandit. Create a free Clerk account (Google or email), follow people, post, message, and join voice or video calls. Interactive panels enhance this page after JavaScript loads; the guidance below remains useful on its own.</p>
+<nav class="mb-tabs" aria-label="Mobile destinations" style="flex-wrap:wrap">
+<a href="/mobile/">Feed</a><a href="/mobile/explore/">Explore</a>
+<a href="/mobile/u/mrblindbandit/?tab=music">Music</a><a href="/mobile/messages/">Messages</a>
+<a href="/mobile/calls/">Calls</a><a href="/mobile/settings/">Settings</a>
+<a href="/mobile/privacy/">Privacy</a><a href="/mobile/trust-safety/">Trust &amp; safety</a>
+<a href="/mobile/about/">About</a><a href="/sign-up?redirect_url=%2Fmobile%2F">Join</a>
+</nav></section>
+<section class="mb-card"><span class="mb-gold" style="font-size:.75rem">§01</span><h2>Access</h2><p>Restricted to Blindbandit Records operators and designated moderators signed in with production Clerk.</p><p>Blindbandit Records operates this product with accessibility-minded design, clear policies, and moderator tools. For business inquiries use <a href="mailto:business@mrblindbandit.net">business@mrblindbandit.net</a>. For privacy requests use <a href="mailto:privacy@mrblindbandit.net">privacy@mrblindbandit.net</a>.</p></section>
+<section class="mb-card"><span class="mb-gold" style="font-size:.75rem">§02</span><h2>Casework</h2><p>Search users, apply restrictions, hide or delete posts, and resolve reports with an audit trail.</p><p>Blindbandit Records operates this product with accessibility-minded design, clear policies, and moderator tools. For business inquiries use <a href="mailto:business@mrblindbandit.net">business@mrblindbandit.net</a>. For privacy requests use <a href="mailto:privacy@mrblindbandit.net">privacy@mrblindbandit.net</a>.</p></section>
+<section class="mb-card"><span class="mb-gold" style="font-size:.75rem">§03</span><h2>Queues</h2><p>Verification and ads review keep public trust signals accurate.</p><p>Blindbandit Records operates this product with accessibility-minded design, clear policies, and moderator tools. For business inquiries use <a href="mailto:business@mrblindbandit.net">business@mrblindbandit.net</a>. For privacy requests use <a href="mailto:privacy@mrblindbandit.net">privacy@mrblindbandit.net</a>.</p></section>
+<section class="mb-card"><span class="mb-gold" style="font-size:.75rem">§04</span><h2>Devices &amp; calls</h2><p>Revoke push devices and force-disconnect calls when safety requires it.</p><p>Blindbandit Records operates this product with accessibility-minded design, clear policies, and moderator tools. For business inquiries use <a href="mailto:business@mrblindbandit.net">business@mrblindbandit.net</a>. For privacy requests use <a href="mailto:privacy@mrblindbandit.net">privacy@mrblindbandit.net</a>.</p></section>
+<section class="mb-card"><h2>Policies &amp; help</h2><p>Read the mobile privacy policy, trust &amp; safety overview, community guidelines, and advertising disclosure before posting promotional content. Children and teens have extra protections; see Child Safety on the main site.</p><p><a href="/mobile/privacy/">Privacy</a> · <a href="/mobile/trust-safety/">Trust &amp; safety</a> · <a href="/community-guidelines/">Community guidelines</a> · <a href="/safety/">Child safety</a> · <a href="/advertising-disclosure/">Advertising disclosure</a> · <a href="/contact/">Contact</a></p><p class="mb-muted">© 2026 Blindbandit Records. Sign in with your production Clerk account for member features. AdSense is not shown on private messages, calls, admin, or legal surfaces.</p></section></main>
+<footer class="mb-footer-legal">
+  <p>Private operations console · Not linked from public navigation · <a href="/mobile/trust-safety/">Trust &amp; Safety</a></p>
+</footer>
+<script src="/clerk-community.js" defer></script>
+<script src="/mobile/admin/admin.js?v=1" defer></script>
+<script src="/accessibility.js?v=phase33" defer></script>
+</body></html>

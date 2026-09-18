@@ -1,0 +1,10 @@
+FFmpeg.wasm browser client
+
+This website includes the browser client from @ffmpeg/ffmpeg version 0.12.15.
+Project: https://github.com/ffmpegwasm/ffmpeg.wasm
+Package license: MIT
+
+The FFmpeg conversion core is downloaded on demand from jsDelivr and is not
+bundled with this website. The core package identifies its license as
+GPL-2.0-or-later. Source and license information are available from the project
+link above and from https://www.ffmpeg.org/legal.html.

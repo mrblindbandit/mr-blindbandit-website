@@ -1,0 +1,614 @@
+[
+  {
+    "title": "Home",
+    "path": "/"
+  },
+  {
+    "title": "Music",
+    "path": "/music/"
+  },
+  {
+    "title": "Collaborators",
+    "path": "/collaborators/"
+  },
+  {
+    "title": "Story",
+    "path": "/story/"
+  },
+  {
+    "title": "Videos",
+    "path": "/videos/"
+  },
+  {
+    "title": "Connect",
+    "path": "/connect/"
+  },
+  {
+    "title": "Support",
+    "path": "/support/"
+  },
+  {
+    "title": "Press",
+    "path": "/press/"
+  },
+  {
+    "title": "Blindbandit Records",
+    "path": "/label/"
+  },
+  {
+    "title": "About the label",
+    "path": "/label/about/"
+  },
+  {
+    "title": "Founder & creative connections",
+    "path": "/label/artists/"
+  },
+  {
+    "title": "Submit music",
+    "path": "/submit/"
+  },
+  {
+    "title": "Submission guide",
+    "path": "/submission-guide/"
+  },
+  {
+    "title": "Submission FAQ",
+    "path": "/submission-faq/"
+  },
+  {
+    "title": "Join the mailing list",
+    "path": "/signup/"
+  },
+  {
+    "title": "Community",
+    "path": "/community/"
+  },
+  {
+    "title": "Start listening",
+    "path": "/discover/"
+  },
+  {
+    "title": "Albums",
+    "path": "/music/albums/"
+  },
+  {
+    "title": "Singles",
+    "path": "/music/singles/"
+  },
+  {
+    "title": "EPs",
+    "path": "/music/eps/"
+  },
+  {
+    "title": "Studio & production",
+    "path": "/studio/"
+  },
+  {
+    "title": "Project brief builder",
+    "path": "/project-brief/"
+  },
+  {
+    "title": "Music use inquiries",
+    "path": "/licensing/"
+  },
+  {
+    "title": "Booking & interviews",
+    "path": "/booking/"
+  },
+  {
+    "title": "Creative partnerships",
+    "path": "/partnerships/"
+  },
+  {
+    "title": "Frequently asked questions",
+    "path": "/faq/"
+  },
+  {
+    "title": "Privacy & form information",
+    "path": "/privacy/"
+  },
+  {
+    "title": "Explore the website",
+    "path": "/explore/"
+  },
+  {
+    "title": "Kaeleb Savon Heck biography",
+    "path": "/biography/"
+  },
+  {
+    "title": "Life & release timeline",
+    "path": "/timeline/"
+  },
+  {
+    "title": "Family & personal story",
+    "path": "/personal-story/"
+  },
+  {
+    "title": "Accessibility hub",
+    "path": "/accessibility/"
+  },
+  {
+    "title": "Keyboard & screen-reader navigation",
+    "path": "/accessibility/navigation/"
+  },
+  {
+    "title": "Accessible listening",
+    "path": "/accessibility/listening/"
+  },
+  {
+    "title": "Listening room",
+    "path": "/listen/"
+  },
+  {
+    "title": "Selected music credits",
+    "path": "/credits/"
+  },
+  {
+    "title": "Journal & updates",
+    "path": "/journal/"
+  },
+  {
+    "title": "A home for the label",
+    "path": "/journal/label-hub/"
+  },
+  {
+    "title": "A guide to listening",
+    "path": "/journal/listening-guide/"
+  },
+  {
+    "title": "Community guidelines",
+    "path": "/community/guidelines/"
+  },
+  {
+    "title": "Music discussions",
+    "path": "/community/music/"
+  },
+  {
+    "title": "Creator conversations",
+    "path": "/community/creators/"
+  },
+  {
+    "title": "Official announcements",
+    "path": "/community/announcements/"
+  },
+  {
+    "title": "Fan poll",
+    "path": "/community/polls/"
+  },
+  {
+    "title": "Community moderation",
+    "path": "/community/moderation/"
+  },
+  {
+    "title": "UUu Tang Maskman",
+    "path": "/collaborators/maskman/"
+  },
+  {
+    "title": "Press materials",
+    "path": "/press/assets/"
+  },
+  {
+    "title": "Professional inquiries",
+    "path": "/contact/forms/"
+  },
+  {
+    "title": "Community account",
+    "path": "/community/account/"
+  },
+  {
+    "title": "My community dashboard",
+    "path": "/community/dashboard/"
+  },
+  {
+    "title": "Sign in \u00b7 Label portal",
+    "path": "/portal/login/"
+  },
+  {
+    "title": "Portal privacy \u00b7 Label portal",
+    "path": "/portal/privacy/"
+  },
+  {
+    "title": "Copyright & music use",
+    "path": "/copyright/"
+  },
+  {
+    "title": "Website terms",
+    "path": "/terms/"
+  },
+  {
+    "title": "Cookies & embedded media",
+    "path": "/cookies/"
+  },
+  {
+    "title": "Business contact",
+    "path": "/contact/"
+  },
+  {
+    "title": "Help & visitor information",
+    "path": "/help/"
+  },
+  {
+    "title": "News & publications",
+    "path": "/news/"
+  },
+  {
+    "title": "Reading room",
+    "path": "/reading-room/"
+  },
+  {
+    "title": "Search the site",
+    "path": "/search/"
+  },
+  {
+    "title": "Prepare your release",
+    "path": "/release-checklist/"
+  },
+  {
+    "title": "Booking inquiries",
+    "path": "/contact/bookings/"
+  },
+  {
+    "title": "Music licensing",
+    "path": "/contact/licensing/"
+  },
+  {
+    "title": "Sponsorship opportunities",
+    "path": "/contact/sponsorships/"
+  },
+  {
+    "title": "Creative partnerships",
+    "path": "/contact/partnerships/"
+  },
+  {
+    "title": "Follow with RSS",
+    "path": "/feeds/"
+  },
+  {
+    "title": "Mr. Blindbandit \u2014 M\u00fasica e historias",
+    "path": "/es/"
+  },
+  {
+    "title": "Creative process",
+    "path": "/artist/creative-process/"
+  },
+  {
+    "title": "Creating without sight",
+    "path": "/artist/accessibility-story/"
+  },
+  {
+    "title": "Sounds and influences",
+    "path": "/artist/influences/"
+  },
+  {
+    "title": "Artist quick facts",
+    "path": "/artist/quick-facts/"
+  },
+  {
+    "title": "Listening guide",
+    "path": "/music/listening-guide/"
+  },
+  {
+    "title": "Music by mood",
+    "path": "/music/mood-guide/"
+  },
+  {
+    "title": "Ambient worlds",
+    "path": "/music/ambient-worlds/"
+  },
+  {
+    "title": "Collaboration guide",
+    "path": "/music/collaboration-guide/"
+  },
+  {
+    "title": "Artist services",
+    "path": "/label/artist-services/"
+  },
+  {
+    "title": "Music distribution guide",
+    "path": "/label/distribution-guide/"
+  },
+  {
+    "title": "How demo review works",
+    "path": "/label/demo-review/"
+  },
+  {
+    "title": "Independent release strategy",
+    "path": "/label/release-strategy/"
+  },
+  {
+    "title": "Accessible studio practices",
+    "path": "/creators/accessible-studio/"
+  },
+  {
+    "title": "Screen readers and music work",
+    "path": "/creators/screen-reader-music/"
+  },
+  {
+    "title": "Independent artist release guide",
+    "path": "/creators/independent-release/"
+  },
+  {
+    "title": "Interview topics",
+    "path": "/press/interview-topics/"
+  },
+  {
+    "title": "Brand and naming guide",
+    "path": "/press/brand-facts/"
+  },
+  {
+    "title": "New listener starter guide",
+    "path": "/fans/starter-guide/"
+  },
+  {
+    "title": "Fan community guide",
+    "path": "/fans/community-guide/"
+  },
+  {
+    "title": "Artist and label resource center",
+    "path": "/resources/"
+  },
+  {
+    "title": "Release budget calculator",
+    "path": "/tools/release-budget/"
+  },
+  {
+    "title": "Royalty split checker",
+    "path": "/tools/royalty-split/"
+  },
+  {
+    "title": "Release metadata checklist",
+    "path": "/tools/metadata-checklist/"
+  },
+  {
+    "title": "Collaboration brief builder",
+    "path": "/tools/collaboration-brief/"
+  },
+  {
+    "title": "Interview brief builder",
+    "path": "/tools/press-brief/"
+  },
+  {
+    "title": "Daily planner",
+    "path": "/tools/daily-planner/"
+  },
+  {
+    "title": "Time-zone planner",
+    "path": "/tools/time-zone-planner/"
+  },
+  {
+    "title": "Tip and bill calculator",
+    "path": "/tools/tip-calculator/"
+  },
+  {
+    "title": "Percentage calculator",
+    "path": "/tools/percentage-calculator/"
+  },
+  {
+    "title": "Unit converter",
+    "path": "/tools/unit-converter/"
+  },
+  {
+    "title": "Date calculator",
+    "path": "/tools/date-calculator/"
+  },
+  {
+    "title": "Password generator",
+    "path": "/tools/password-generator/"
+  },
+  {
+    "title": "Text toolkit",
+    "path": "/tools/text-toolkit/"
+  },
+  {
+    "title": "File-name cleaner",
+    "path": "/tools/file-name-cleaner/"
+  },
+  {
+    "title": "Checklist maker",
+    "path": "/tools/checklist-maker/"
+  },
+  {
+    "title": "Professional audio converter",
+    "path": "/audio-converter/"
+  },
+  {
+    "title": "Art Track & Podcast Generator",
+    "path": "/art-track/"
+  },
+  {
+    "title": "Social Audiogram",
+    "path": "/audiogram/"
+  },
+  {
+    "title": "Audio Metadata Editor",
+    "path": "/metadata-editor/"
+  },
+  {
+    "title": "Waveform Image Generator",
+    "path": "/waveform-image/"
+  },
+  {
+    "title": "Artwork Resizer",
+    "path": "/artwork-resizer/"
+  },
+  {
+    "title": "Loudness & Audio Check",
+    "path": "/audio-check/"
+  },
+  {
+    "title": "Audio Clipper",
+    "path": "/audio-clipper/"
+  },
+  {
+    "title": "Audio Fade In & Out",
+    "path": "/audio-fade/"
+  },
+  {
+    "title": "Audio Speed Changer",
+    "path": "/audio-speed/"
+  },
+  {
+    "title": "Audio Reverser",
+    "path": "/audio-reverse/"
+  },
+  {
+    "title": "Volume & Peak Limiter",
+    "path": "/audio-volume/"
+  },
+  {
+    "title": "Three-Band Equalizer",
+    "path": "/audio-equalizer/"
+  },
+  {
+    "title": "Pitch Shifter",
+    "path": "/audio-pitch/"
+  },
+  {
+    "title": "Audio Channel Converter",
+    "path": "/audio-channels/"
+  },
+  {
+    "title": "Audio Looper",
+    "path": "/audio-loop/"
+  },
+  {
+    "title": "Audio Compressor",
+    "path": "/audio-compressor/"
+  },
+  {
+    "title": "Silence Remover",
+    "path": "/audio-silence/"
+  },
+  {
+    "title": "Media Tools",
+    "path": "/media-tools/"
+  },
+  {
+    "title": "Child Safety Policy",
+    "path": "/safety/"
+  },
+  {
+    "title": "Advertising and Sponsorship Disclosure",
+    "path": "/advertising-disclosure/"
+  },
+  {
+    "title": "A Journey Beyond Blindness",
+    "path": "/news/essays/a-journey-beyond-blindness/"
+  },
+  {
+    "title": "Building a Career in Music: The Work Behind Mr. Blindbandit",
+    "path": "/news/essays/building-a-career-in-music/"
+  },
+  {
+    "title": "The Best Post-Secondary Path Is the One That Fits the Student",
+    "path": "/news/essays/best-post-secondary-path/"
+  },
+  {
+    "title": "Community Guidelines",
+    "path": "/community-guidelines/"
+  },
+  {
+    "title": "Music Submission Terms",
+    "path": "/submission-terms/"
+  },
+  {
+    "title": "Media Suite Terms and Safety Rules",
+    "path": "/media-suite-terms/"
+  },
+  {
+    "title": "Security and Vulnerability Reporting",
+    "path": "/security-reporting/"
+  },
+  {
+    "title": "Content Reports and Moderation Appeals",
+    "path": "/moderation-appeals/"
+  },
+  {
+    "title": "Legal and Trust Center",
+    "path": "/legal/"
+  },
+  {
+    "title": "Privacy rights request",
+    "path": "/privacy-request/"
+  },
+  {
+    "title": "Report content or appeal a decision",
+    "path": "/report-content/"
+  },
+  {
+    "title": "Copyright notice",
+    "path": "/copyright-notice/"
+  },
+  {
+    "title": "Support by card",
+    "path": "/support/card/"
+  },
+  {
+    "title": "Check your support payment",
+    "path": "/support/payment/"
+  },
+  {
+    "title": "Payment help",
+    "path": "/payments/help/"
+  },
+  {
+    "title": "Support payment terms",
+    "path": "/payments/terms/"
+  },
+  {
+    "title": "Mr. Blindbandit \u2014 Musika, kuwento at malayang paglikha",
+    "path": "/fil/"
+  },
+  {
+    "title": "Mr. Blindbandit \u2014 Musika, sugilanon ug gawasnong paglalang",
+    "path": "/ceb/"
+  },
+  {
+    "title": "Sino si Mr. Blindbandit?",
+    "path": "/fil/biography/"
+  },
+  {
+    "title": "Kinsa si Mr. Blindbandit?",
+    "path": "/ceb/biography/"
+  },
+  {
+    "title": "Makipag-ugnayan",
+    "path": "/fil/contact/"
+  },
+  {
+    "title": "Blindbandit Records",
+    "path": "/fil/label/"
+  },
+  {
+    "title": "Suportahan si Mr. Blindbandit",
+    "path": "/fil/support/"
+  },
+  {
+    "title": "Impormasyon para sa midya",
+    "path": "/fil/press/"
+  },
+  {
+    "title": "Pakigkontak",
+    "path": "/ceb/contact/"
+  },
+  {
+    "title": "Blindbandit Records",
+    "path": "/ceb/label/"
+  },
+  {
+    "title": "Suportahi si Mr. Blindbandit",
+    "path": "/ceb/support/"
+  },
+  {
+    "title": "Impormasyon alang sa midya",
+    "path": "/ceb/press/"
+  },
+  {
+    "title": "Fan hub",
+    "path": "/fans/"
+  },
+  {
+    "title": "Creator & everyday tools",
+    "path": "/tools/"
+  }
+]

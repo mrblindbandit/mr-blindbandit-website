@@ -1,0 +1,57 @@
+import {ApiError,q,uuid,hash,equal,audit,setting,setSetting,type Env} from './core';
+import {credentials} from './integrations';
+
+const maxFile=250*1024*1024;
+const formats:Record<string,string[]>={'audio/wav':['wav'],'audio/mpeg':['mp3'],'audio/flac':['flac'],'audio/mp4':['m4a'],'video/mp4':['mp4'],'image/png':['png'],'image/jpeg':['jpg','jpeg'],'image/webp':['webp']};
+export const toolsCatalog=[
+ {id:'audio-converter',title:'Audio Converter',input:'audio'},
+ {id:'audio-clipper',title:'Audio Clipper',input:'audio'},
+ {id:'audio-normalizer',title:'Audio Normalizer',input:'audio'},
+ {id:'artwork-resizer',title:'Artwork Resizer',input:'image'},
+ {id:'art-track',title:'Art Track Generator',input:'audio'},
+ {id:'audiogram',title:'Podcast Audiogram',input:'audio'}
+];
+export async function mediaWorkerReady(env:Env){return !!await credentials(env,'media_worker')&&Number(await setting(env,'media_worker_seen',0))>Date.now()-120000;}
+export async function reserve(env:Env,a:any,d:any,rid:string){
+ const extension=d.filename.split('.').pop()?.toLowerCase();
+ if(!formats[d.content_type]?.includes(extension))throw new ApiError(400,'UNSUPPORTED_MEDIA','Use a supported media type and matching filename extension.');
+ const id=uuid(),now=Date.now();
+ const row=await q(env,"INSERT INTO platform_media(id,user_id,filename,content_type,size_bytes,status,created_at) SELECT ?,?,?,?,?,'pending',? WHERE (SELECT COALESCE(SUM(size_bytes),0) FROM platform_media WHERE user_id=? AND deleted_at IS NULL)<=(1073741824-?) RETURNING id",id,a.id,d.filename,d.content_type,d.size_bytes,now,a.id,d.size_bytes).first();
+ if(!row)throw new ApiError(409,'STORAGE_QUOTA','This account has reached its 1 GB media allowance.');
+ await audit(env,a.id,'media.upload_reserved',id,rid).run();
+ return {id,upload_url:'/v1/uploads/'+id,method:'PUT',content_type:d.content_type,size_bytes:d.size_bytes,expires_at:now+3600000};
+}
+function signature(bytes:Uint8Array,type:string){const s=String.fromCharCode(...bytes);if(type==='audio/wav')return s.startsWith('RIFF')&&s.slice(8,12)==='WAVE';if(type==='audio/flac')return s.startsWith('fLaC');if(type==='audio/mpeg')return s.startsWith('ID3')||(bytes[0]===255&&(bytes[1]&224)===224);if(type==='image/png')return bytes[0]===137&&s.slice(1,4)==='PNG';if(type==='image/jpeg')return bytes[0]===255&&bytes[1]===216&&bytes[2]===255;if(type==='image/webp')return s.startsWith('RIFF')&&s.slice(8,12)==='WEBP';return ['audio/mp4','video/mp4'].includes(type)&&s.slice(4,8)==='ftyp';}
+async function validateObject(env:Env,key:string,type:string,expected?:number){const head=await env.BUCKET.head(key);if(!head||head.size<12||head.size>maxFile||(expected!==undefined&&head.size!==expected))throw new ApiError(400,'INVALID_MEDIA_SIZE','Uploaded media has an unexpected size.');const sample=await env.BUCKET.get(key,{range:{offset:0,length:64}});if(!sample||!signature(new Uint8Array(await sample.arrayBuffer()),type))throw new ApiError(400,'INVALID_MEDIA_CONTENT','The uploaded file does not match its declared media format.');return head.size;}
+export async function upload(request:Request,env:Env,a:any,id:string,rid:string){
+ const row=await q(env,"SELECT * FROM platform_media WHERE id=? AND user_id=? AND status='pending' AND deleted_at IS NULL AND created_at>?",id,a.id,Date.now()-3600000).first();
+ if(!row)throw new ApiError(404,'UPLOAD_UNAVAILABLE','This upload is missing, expired, or already used.');
+ if(request.headers.get('content-type')?.split(';')[0]!==row.content_type||Number(request.headers.get('content-length'))!==row.size_bytes||!request.body)throw new ApiError(400,'UPLOAD_HEADERS','Send the reserved content type and exact Content-Length.');
+ const claimed=await q(env,"UPDATE platform_media SET status='uploading' WHERE id=? AND status='pending' RETURNING id",id).first();if(!claimed)throw new ApiError(409,'UPLOAD_IN_PROGRESS','This upload has already started.');
+ const key='private/platform-media/'+id;
+ try{await env.BUCKET.put(key,request.body,{httpMetadata:{contentType:row.content_type}});await validateObject(env,key,row.content_type,row.size_bytes);await env.DB.batch([q(env,"UPDATE platform_media SET status='ready' WHERE id=?",id),audit(env,a.id,'media.uploaded',id,rid)]);return {id,status:'ready'};}
+ catch(error){await env.BUCKET.delete(key).catch(()=>{});await q(env,"UPDATE platform_media SET status='pending' WHERE id=?",id).run();throw error;}
+}
+export async function mediaRecord(env:Env,user:string,id:string){const r=await q(env,'SELECT id,filename,content_type,size_bytes,status,created_at FROM platform_media WHERE id=? AND user_id=? AND deleted_at IS NULL',id,user).first();if(!r)throw new ApiError(404,'MEDIA_NOT_FOUND','Media not found.');return r;}
+export async function download(env:Env,user:string,id:string){const r=await mediaRecord(env,user,id);if(r.status!=='ready')throw new ApiError(409,'MEDIA_NOT_READY','This media is not ready.');const object=await env.BUCKET.get('private/platform-media/'+id);if(!object)throw new ApiError(404,'MEDIA_NOT_FOUND','Media not found.');return new Response(object.body,{headers:{'content-type':r.content_type,'content-length':String(object.size),'content-disposition':"attachment; filename*=UTF-8''"+encodeURIComponent(r.filename),'cache-control':'private, no-store','x-content-type-options':'nosniff'}});}
+export async function createJob(env:Env,a:any,d:any,rid:string){
+ if(!await mediaWorkerReady(env))throw new ApiError(503,'PROCESSOR_NOT_CONFIGURED','A background media processor must be connected before submitting jobs.');
+ const input=await mediaRecord(env,a.id,d.media_id),tool=toolsCatalog.find(t=>t.id===d.tool);if(!tool||input.status!=='ready'||!input.content_type.startsWith(tool.input+'/'))throw new ApiError(400,'INVALID_JOB_INPUT','Select a ready file supported by this tool.');
+ if(d.options.artwork_id){const artwork=await mediaRecord(env,a.id,d.options.artwork_id);if(artwork.status!=='ready'||!artwork.content_type.startsWith('image/'))throw new ApiError(400,'INVALID_ARTWORK','Select a ready image owned by this account.');}
+ const digest=await hash(JSON.stringify({tool:d.tool,media_id:d.media_id,options:d.options}));const old=await q(env,'SELECT id,input_digest FROM platform_jobs WHERE user_id=? AND idempotency_key=?',a.id,d.idempotency_key).first();if(old){if(old.input_digest!==digest)throw new ApiError(409,'IDEMPOTENCY_CONFLICT','Use a new idempotency key for different job options.');return {id:old.id,reused:true};}
+ const id=uuid();const result=await q(env,"INSERT INTO platform_jobs(id,user_id,media_id,tool,options,status,idempotency_key,input_digest,created_at,updated_at) SELECT ?,?,?,?,?,'queued',?,?,?,? WHERE (SELECT COUNT(*) FROM platform_jobs WHERE user_id=? AND status IN ('queued','processing'))<5 RETURNING id",id,a.id,d.media_id,d.tool,JSON.stringify(d.options),d.idempotency_key,digest,Date.now(),Date.now(),a.id).first();if(!result)throw new ApiError(409,'JOB_LIMIT','Wait for an active job to finish before submitting another.');await audit(env,a.id,'media.job_created',id,rid).run();return {id,status:'queued'};
+}
+export async function workerAuth(request:Request,env:Env){const c=await credentials(env,'media_worker');const auth=request.headers.get('authorization')||'';if(!c||!auth.startsWith('Bearer ')||!await equal(auth.slice(7),c.worker_key))throw new ApiError(401,'WORKER_AUTH_REQUIRED','Media processor authentication is required.');}
+export async function claim(request:Request,env:Env){await workerAuth(request,env);const token=uuid()+uuid(),now=Date.now();await setSetting(env,'media_worker_seen',now).run();await q(env,"UPDATE platform_jobs SET status='failed',error_code='PROCESSOR_TIMEOUT',lease_hash=NULL,updated_at=? WHERE status='processing' AND lease_expires_at<=?",now,now).run();const row=await q(env,"UPDATE platform_jobs SET status='processing',lease_hash=?,lease_expires_at=?,updated_at=? WHERE id=(SELECT id FROM platform_jobs WHERE status='queued' ORDER BY created_at LIMIT 1) AND status='queued' RETURNING id,tool,options",await hash(token),now+20*60000,now).first();return row?{...row,options:JSON.parse(row.options),lease_token:token,input_url:'/v1/worker/jobs/'+row.id+'/input',artwork_url:'/v1/worker/jobs/'+row.id+'/artwork',output_url:'/v1/worker/jobs/'+row.id+'/output'}:null;}
+async function claimed(request:Request,env:Env,id:string){await workerAuth(request,env);const row=await q(env,"SELECT * FROM platform_jobs WHERE id=? AND status='processing' AND lease_hash=? AND lease_expires_at>?",id,await hash(request.headers.get('x-job-lease')||''),Date.now()).first();if(!row)throw new ApiError(409,'JOB_LEASE_EXPIRED','This job lease is not valid.');return row;}
+export async function workerInput(request:Request,env:Env,id:string,artwork=false){const job=await claimed(request,env,id);const media=artwork?JSON.parse(job.options).artwork_id:job.media_id;if(!media)throw new ApiError(404,'NO_ARTWORK','This job has no artwork.');return download(env,job.user_id,media);}
+export async function workerOutput(request:Request,env:Env,id:string,rid:string){const job=await claimed(request,env,id),type=request.headers.get('content-type')?.split(';')[0]||'',size=Number(request.headers.get('content-length'));if(!formats[type]||!Number.isInteger(size)||size<12||size>maxFile||!request.body)throw new ApiError(400,'INVALID_OUTPUT','Send a supported output type and Content-Length under 250 MB.');const mediaId=uuid(),key='private/platform-media/'+mediaId;let committed=false;
+ try{await env.BUCKET.put(key,request.body,{httpMetadata:{contentType:type}});await validateObject(env,key,type,size);const now=Date.now(),notification=uuid();
+ const results=await env.DB.batch([
+ q(env,"INSERT INTO platform_media(id,user_id,filename,content_type,size_bytes,status,created_at) SELECT ?,?,?,?,?,'ready',? WHERE EXISTS(SELECT 1 FROM platform_jobs WHERE id=? AND status='processing' AND lease_hash=? AND lease_expires_at>?) AND (SELECT COALESCE(SUM(size_bytes),0) FROM platform_media WHERE user_id=? AND deleted_at IS NULL)<=1073741824-? RETURNING id",mediaId,job.user_id,job.tool+'-'+id+'.'+formats[type][0],type,size,now,id,job.lease_hash,now,job.user_id,size),
+ q(env,"UPDATE platform_jobs SET status='completed',output_id=?,updated_at=?,lease_hash=NULL WHERE id=? AND status='processing' AND lease_hash=? AND EXISTS(SELECT 1 FROM platform_media WHERE id=?)",mediaId,now,id,job.lease_hash,mediaId),
+ q(env,"INSERT INTO platform_notifications(id,user_id,title,body,category,deep_link,created_at) SELECT ?,?,?,?,'media_job',?,? WHERE EXISTS(SELECT 1 FROM platform_jobs WHERE id=? AND status='completed' AND output_id=?)",notification,job.user_id,'Media processing complete','Your '+job.tool+' result is ready.','https://mrblindbandit.net/portal/control-center/',now,id,mediaId)
+ ]);if(!results[0].results?.length)throw new ApiError(409,'JOB_OR_QUOTA_CHANGED','The job lease or available storage changed.');committed=true;await audit(env,job.user_id,'media.completed',id,rid).run();return {id,status:'completed',media_id:mediaId};
+ }catch(e){if(!committed)await env.BUCKET.delete(key).catch(()=>{});throw e;}
+}
+export async function failJob(request:Request,env:Env,id:string,rid:string){const job=await claimed(request,env,id);await env.DB.batch([q(env,"UPDATE platform_jobs SET status='failed',error_code='PROCESSING_FAILED',lease_hash=NULL,updated_at=? WHERE id=? AND lease_hash=?",Date.now(),id,job.lease_hash),audit(env,'media-worker','media.failed',id,rid)]);return {id,status:'failed'};}

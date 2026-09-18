@@ -1,0 +1,1 @@
+(()=>{'use strict';const picker=document.querySelector('[data-all-pages]');if(!picker)return;picker.addEventListener('change',()=>{const path=picker.value;if(!path.startsWith('/')||path.startsWith('//'))return;picker.value='';location.assign(path);});})();

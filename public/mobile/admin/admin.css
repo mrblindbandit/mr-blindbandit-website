@@ -1,0 +1,16 @@
+.mb-admin .admin-shell{max-width:1100px}
+.admin-hero{display:flex;gap:1rem;align-items:center}
+.admin-hero-logo{border-radius:14px;object-fit:cover;border:1px solid var(--mb-line)}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.75rem}
+.admin-stat{background:#0f100e;border:1px solid var(--mb-line);border-radius:12px;padding:.75rem;text-align:center}
+.admin-stat strong{display:block;font-size:1.4rem;color:var(--mb-gold)}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:800px){.admin-grid{grid-template-columns:1fr}}
+.admin-list{margin-top:.75rem;max-height:420px;overflow:auto}
+.admin-row{display:flex;justify-content:space-between;gap:.75rem;align-items:flex-start;padding:.65rem 0;border-bottom:1px solid var(--mb-line)}
+.admin-row button,.admin-actions button{margin:.2rem .35rem .2rem 0}
+.admin-pre{white-space:pre-wrap;font-size:.78rem;background:#0f100e;border:1px solid var(--mb-line);border-radius:12px;padding:.75rem;max-height:360px;overflow:auto}
+.admin-badge{display:inline-block;padding:.1rem .45rem;border-radius:999px;font-size:.72rem;border:1px solid var(--mb-line)}
+.admin-badge.bad{color:#ffb4a8;border-color:#c45c4a}
+.admin-badge.warn{color:#fce288;border-color:#c9a227}
+.admin-badge.ok{color:#9dffc2;border-color:#3d9a6a}

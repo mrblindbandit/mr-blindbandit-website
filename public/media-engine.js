@@ -1,0 +1,31 @@
+/* Shared browser-local engine. Source media never leaves the worker. */
+(()=>{'use strict';
+const mime={mp3:'audio/mpeg',wav:'audio/wav',flac:'audio/flac',m4a:'audio/mp4',aac:'audio/aac',ogg:'audio/ogg',opus:'audio/ogg',aiff:'audio/aiff',wv:'audio/wavpack',mp4:'video/mp4',png:'image/png'};
+const deadline=(promise,ms,message)=>{let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error(message)),ms);})]).finally(()=>clearTimeout(timer));};
+class LocalMediaEngine {
+ constructor(report=()=>{}){this.report=report;this.api=null;this.controller=null;this.urls=[];this.files=new Set();this.logs=[];this.cancelled=false;}
+ async asset(url,type){this.controller=new AbortController();const controller=this.controller;const timer=setTimeout(()=>controller.abort(),90000);try{const r=await fetch(url,{signal:controller.signal,cache:'force-cache',credentials:'omit',referrerPolicy:'no-referrer'});if(!r.ok)throw Error('Engine download failed ('+r.status+'). Check your connection and retry.');const total=Number(r.headers.get('content-length'));const reader=r.body.getReader();let size=0;const chunks=[];for(;;){const part=await reader.read();if(part.done)break;chunks.push(part.value);size+=part.value.length;this.report('Loading',total?Math.min(99,Math.round(size/total*100)):null,'Downloading engine: '+(size/1048576).toFixed(1)+' MB');}const out=URL.createObjectURL(new Blob(chunks,{type}));this.urls.push(out);return out;}finally{clearTimeout(timer);this.controller=null;}}
+ async ready(){if(this.api?.loaded)return this.api;this.cancelled=false;this.report('Loading',null,'Starting local engine');try{
+ if(!window.FFmpegWASM){await deadline(new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='/vendor/ffmpeg/ffmpeg.js';s.onload=resolve;s.onerror=()=>reject(Error('Engine client failed to load. Retry.'));document.head.append(s);}),20000,'Engine client timed out. Retry.');}
+ const coreURL=await this.asset('https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd/ffmpeg-core.js','text/javascript');
+ const wasmURL=await this.asset('https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd/ffmpeg-core.wasm','application/wasm');
+ if(this.cancelled)throw Error('Processing cancelled.');
+ const api=this.api=new window.FFmpegWASM.FFmpeg();
+ api.on('log',({message})=>{this.logs.push(message);if(this.logs.length>3000)this.logs.shift();});
+ api.on('progress',({progress})=>this.report('Processing',Number.isFinite(progress)?Math.min(99,Math.max(0,Math.round(progress*100))):null,'Processing on your device'));
+ await deadline(api.load({coreURL,wasmURL}),45000,'Engine could not start within 45 seconds. Retry, or try another browser.');
+ this.report('Ready',null,'Local engine ready');return api;
+ }catch(e){this.dispose();throw Error(this.cancelled?'Processing cancelled.':e.name==='AbortError'?'Engine download timed out. Check your connection and retry.':e.message);}}
+ async input(file){if(!file||!file.size)throw Error('Choose a non-empty media file.');if(file.size>250*1048576)throw Error('This browser engine accepts up to 250 MB. Use a shorter or smaller source.');const bytes=new Uint8Array(await file.arrayBuffer());const api=await this.ready();if(this.cancelled)throw Error('Processing cancelled.');const ext=(file.name.split('.').pop()||'bin').replace(/[^a-z0-9]/gi,'').slice(0,10);const name='source-'+crypto.randomUUID()+'.'+ext;await api.writeFile(name,bytes);this.files.add(name);return name;}
+ async exec(args){const api=await this.ready();this.logs=[];this.report('Processing',null,'Processing on your device');const code=await api.exec(['-y',...args]);if(this.cancelled)throw Error('Processing cancelled.');if(code!==0){const detail=this.logs.filter(line=>/error|invalid|not found|cannot|failed/i.test(line)).slice(-2).join(' ').slice(0,350);throw Error('This file or export setting could not be processed. '+(detail||'Try a supported file or a smaller export.'));}}
+ async output(name){this.files.add(name);const bytes=await this.api.readFile(name);if(!bytes?.byteLength)throw Error('No output was produced. Try another format.');return new Blob([bytes],{type:mime[name.split('.').pop()]||'application/octet-stream'});}
+ async cleanup(){if(this.api?.loaded)for(const name of this.files){try{await this.api.deleteFile(name);}catch{}}this.files.clear();}
+ dispose(){this.controller?.abort();this.api?.terminate();this.api=null;this.files.clear();for(const u of this.urls)URL.revokeObjectURL(u);this.urls=[];}
+ cancel(){this.cancelled=true;this.dispose();}
+}
+function filename(s){return (s.normalize('NFKC').replace(/[<>:"/\\|?*\x00-\x1f]/g,'-').replace(/[. ]+$/,'').trim()||'media').slice(0,140);}
+function complete(blob,name,trigger){const url=URL.createObjectURL(blob),d=document.createElement('dialog');d.setAttribute('aria-labelledby','media-complete-heading');const h=document.createElement('h2');h.id='media-complete-heading';h.textContent='Your file is ready';const p=document.createElement('p');p.textContent=name+' · '+(blob.size/1048576).toFixed(2)+' MB';const a=document.createElement('a');a.href=url;a.download=filename(name);a.className='button';a.textContent='Download file';const close=document.createElement('button');close.textContent='Close / dismiss';close.type='button';close.onclick=()=>d.close();d.append(h,p,a);
+ const file=new File([blob],filename(name),{type:blob.type});if(navigator.canShare?.({files:[file]})){const share=document.createElement('button');share.textContent='Share file';share.onclick=async()=>{try{await navigator.share({files:[file]});}catch(e){if(e.name!=='AbortError')p.textContent='Sharing failed. Use Download file instead.';}};d.append(share);}
+ const another=document.createElement('button');another.type='button';another.textContent='Create another';another.onclick=()=>{d.close();trigger?.form?.reset();trigger?.form?.dispatchEvent(new Event('media-start-over'));trigger?.form?.querySelector('input[type=file]')?.focus();};d.append(another,close);document.body.append(d);d.addEventListener('close',()=>{URL.revokeObjectURL(url);d.remove();trigger?.focus();},{once:true});d.showModal();a.focus();}
+window.LocalMedia={Engine:LocalMediaEngine,complete,filename,mime};
+})();

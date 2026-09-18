@@ -1,0 +1,2931 @@
+[
+  {
+    "slug": "release-plans",
+    "title": "Release plans",
+    "group": "Releases",
+    "description": "Coordinate a release from the first master to its launch.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Artist",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Release format",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Release date",
+        "type": "date"
+      },
+      {
+        "key": "f3",
+        "label": "Distributor",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Launch objective",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Confirm master ownership",
+      "Approve the artwork",
+      "Check metadata",
+      "Schedule distribution",
+      "Review launch results"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "track-register",
+    "title": "Track register",
+    "group": "Releases",
+    "description": "Maintain recording identifiers, versions and production credits.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Artist",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Version",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "ISRC",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Duration",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Recording credits",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Confirm title and version",
+      "Check recording identifier",
+      "Credit contributors",
+      "Review explicit-content flag",
+      "Link the approved master"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "distribution",
+    "title": "Distribution deliveries",
+    "group": "Releases",
+    "description": "Track what was delivered, where it was sent and what still needs correction.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Distributor",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Release",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Delivery date",
+        "type": "date"
+      },
+      {
+        "key": "f3",
+        "label": "Delivery reference",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Delivery notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Check audio specification",
+      "Review cover specification",
+      "Confirm release territories",
+      "Save delivery reference",
+      "Check store availability"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "metadata",
+    "title": "Metadata review",
+    "group": "Releases",
+    "description": "Resolve title, credit and identifier issues before delivery.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Release",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Track",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Field to review",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Current value",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Approved value",
+        "type": "text"
+      },
+      {
+        "key": "f5",
+        "label": "Review notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Compare with approved credits",
+      "Check spelling and capitalization",
+      "Check identifier consistency",
+      "Record the correction",
+      "Confirm redelivery"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "artwork",
+    "title": "Artwork approvals",
+    "group": "Releases",
+    "description": "Keep cover briefs, versions and approval decisions together.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Release",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Designer",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Asset link",
+        "type": "url"
+      },
+      {
+        "key": "f3",
+        "label": "Dimensions",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Creative brief",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Confirm image permissions",
+      "Review legibility at small sizes",
+      "Check export dimensions",
+      "Proof artist and release names",
+      "Save approved version"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "artist-onboarding",
+    "title": "Artist onboarding",
+    "group": "Artists",
+    "description": "Coordinate the information and deliverables needed to begin label work.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Artist",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Contact email",
+        "type": "email"
+      },
+      {
+        "key": "f2",
+        "label": "Start date",
+        "type": "date"
+      },
+      {
+        "key": "f3",
+        "label": "Assigned manager",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Onboarding notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Confirm contact details",
+      "Create the client account",
+      "Share the agreement",
+      "Collect release information",
+      "Schedule the first check-in"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "artist-development",
+    "title": "Artist development",
+    "group": "Artists",
+    "description": "Build practical development plans with clear next steps.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Artist",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Focus area",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Review date",
+        "type": "date"
+      },
+      {
+        "key": "f3",
+        "label": "Success measure",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Development plan",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Agree on the objective",
+      "Record the baseline",
+      "Choose specific actions",
+      "Assign a review date",
+      "Document progress"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "talent-pipeline",
+    "title": "Talent pipeline",
+    "group": "Artists",
+    "description": "Keep A&R research and outreach decisions in one place.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Artist",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Music link",
+        "type": "url"
+      },
+      {
+        "key": "f2",
+        "label": "Contact route",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Next contact date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Listening notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Listen to the submitted music",
+      "Review creative fit",
+      "Record contact permission",
+      "Choose next action",
+      "Log the outcome"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "collaboration-briefs",
+    "title": "Collaboration briefs",
+    "group": "Artists",
+    "description": "Define the scope, delivery expectations and credits of a shared project.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Artist",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Collaborator",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Delivery date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Scope and credits",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Agree on creative direction",
+      "Clarify deliverables",
+      "Discuss credit and rights",
+      "Confirm the schedule",
+      "Review the final delivery"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "contact-directory",
+    "title": "Contact directory",
+    "group": "Artists",
+    "description": "Keep the professional contacts needed for label projects.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Name",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Organization",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Contact email",
+        "type": "email"
+      },
+      {
+        "key": "f3",
+        "label": "Contact category",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Relationship notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Confirm the preferred contact route",
+      "Record the relationship",
+      "Add relevant project context",
+      "Check permission before outreach",
+      "Keep details current"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "campaign-plans",
+    "title": "Campaign plans",
+    "group": "Campaigns",
+    "description": "Plan a release campaign around a defined audience and outcome.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Release",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Audience",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Launch date",
+        "type": "date"
+      },
+      {
+        "key": "f3",
+        "label": "Primary channel",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Campaign brief",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Define the audience",
+      "Choose a measurable objective",
+      "Prepare the assets",
+      "Assign channel owners",
+      "Review results"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "content-calendar",
+    "title": "Content calendar",
+    "group": "Campaigns",
+    "description": "Prepare scheduled content with a clear owner and publication record.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Channel",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Publish date",
+        "type": "date"
+      },
+      {
+        "key": "f2",
+        "label": "Asset link",
+        "type": "url"
+      },
+      {
+        "key": "f3",
+        "label": "Content format",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Caption and creative notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Confirm the asset",
+      "Proof the caption",
+      "Review accessibility text",
+      "Schedule or publish externally",
+      "Record the published link"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "press-outreach",
+    "title": "Press outreach",
+    "group": "Campaigns",
+    "description": "Prepare media pitches and keep follow-up decisions organized.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Outlet",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Contact email",
+        "type": "email"
+      },
+      {
+        "key": "f2",
+        "label": "Release",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Follow-up date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Pitch draft",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Research the outlet",
+      "Personalize the pitch",
+      "Attach approved press links",
+      "Send through your email service",
+      "Record the response"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "playlist-pitches",
+    "title": "Playlist pitches",
+    "group": "Campaigns",
+    "description": "Track relevant playlist opportunities and pitch preparation.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Playlist",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Curator",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Track link",
+        "type": "url"
+      },
+      {
+        "key": "f3",
+        "label": "Pitch date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Pitch notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Check playlist relevance",
+      "Confirm curator contact",
+      "Prepare a concise pitch",
+      "Avoid guaranteed-placement schemes",
+      "Record the outcome"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "creative-briefs",
+    "title": "Creative briefs",
+    "group": "Campaigns",
+    "description": "Give designers, editors and collaborators a complete creative brief.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Audience",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Deliverable",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Creative direction",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Describe the intended audience",
+      "Specify formats and dimensions",
+      "Provide references",
+      "Assign reviewers",
+      "Agree on delivery dates"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "budgets",
+    "title": "Project budgets",
+    "group": "Finance",
+    "description": "Plan spending by project and document the approval basis.",
+    "roles": [
+      "owner",
+      "admin",
+      "accountant"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Planned amount",
+        "type": "money"
+      },
+      {
+        "key": "f3",
+        "label": "Budget owner",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Budget breakdown",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Define the project scope",
+      "List expected costs",
+      "Confirm currency",
+      "Document approval",
+      "Compare with recorded expenses"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "These are planning records. They do not calculate royalties, authorize payments or replace the earnings ledger."
+  },
+  {
+    "slug": "expense-register",
+    "title": "Expense register",
+    "group": "Finance",
+    "description": "Record project expenses and retain a clear supporting reference.",
+    "roles": [
+      "owner",
+      "admin",
+      "accountant"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Vendor",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Amount",
+        "type": "money"
+      },
+      {
+        "key": "f4",
+        "label": "Expense date",
+        "type": "date"
+      },
+      {
+        "key": "f5",
+        "label": "Receipt link",
+        "type": "url"
+      },
+      {
+        "key": "f6",
+        "label": "Expense notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Identify the expense",
+      "Record its project",
+      "Check amount and currency",
+      "Link supporting documentation",
+      "Record approval"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "These are planning records. They do not calculate royalties, authorize payments or replace the earnings ledger."
+  },
+  {
+    "slug": "invoice-register",
+    "title": "Invoice register",
+    "group": "Finance",
+    "description": "Track invoice records and follow-up without initiating payments.",
+    "roles": [
+      "owner",
+      "admin",
+      "accountant"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Invoice reference",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Counterparty",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Amount",
+        "type": "money"
+      },
+      {
+        "key": "f4",
+        "label": "Payment due",
+        "type": "date"
+      },
+      {
+        "key": "f5",
+        "label": "Invoice notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Check counterparty details",
+      "Confirm invoice reference",
+      "Review amount and currency",
+      "Record payment terms",
+      "Update after payment confirmation"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "These are planning records. They do not calculate royalties, authorize payments or replace the earnings ledger."
+  },
+  {
+    "slug": "recoupment",
+    "title": "Recoupment notes",
+    "group": "Finance",
+    "description": "Document agreed cost recovery assumptions and review questions.",
+    "roles": [
+      "owner",
+      "admin",
+      "accountant"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Artist",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Agreement reference",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Recorded cost",
+        "type": "money"
+      },
+      {
+        "key": "f4",
+        "label": "Review notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Locate the relevant agreement",
+      "Identify eligible costs",
+      "Separate assumptions from records",
+      "Review with authorized staff",
+      "Link the supporting statement"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "These are planning records. They do not calculate royalties, authorize payments or replace the earnings ledger."
+  },
+  {
+    "slug": "statement-review",
+    "title": "Statement review",
+    "group": "Finance",
+    "description": "Coordinate review of distributor or royalty statements.",
+    "roles": [
+      "owner",
+      "admin",
+      "accountant"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Distributor",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Statement period",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Artist",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Findings and questions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Check the reporting period",
+      "Confirm artist and release mapping",
+      "Review currency and deductions",
+      "Record discrepancies",
+      "Enter verified earnings separately"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "These are planning records. They do not calculate royalties, authorize payments or replace the earnings ledger."
+  },
+  {
+    "slug": "label-calendar",
+    "title": "Label calendar",
+    "group": "Operations",
+    "description": "Coordinate upcoming deadlines, reviews and internal events.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Event type",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Event date",
+        "type": "date"
+      },
+      {
+        "key": "f2",
+        "label": "Time and timezone",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Participants",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Agenda",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Confirm time and timezone",
+      "Identify participants",
+      "Prepare the agenda",
+      "Send any calendar invitations externally",
+      "Record the outcome"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "meeting-notes",
+    "title": "Meeting notes",
+    "group": "Operations",
+    "description": "Turn conversations into decisions and assigned follow-up.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Meeting date",
+        "type": "date"
+      },
+      {
+        "key": "f1",
+        "label": "Participants",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Next review",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Notes and actions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Record attendees",
+      "Summarize the discussion",
+      "Separate decisions from ideas",
+      "Assign action owners",
+      "Schedule follow-up"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "approval-queue",
+    "title": "Approval queue",
+    "group": "Operations",
+    "description": "Track decisions that need an authorized reviewer.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Reviewer",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Decision due",
+        "type": "date"
+      },
+      {
+        "key": "f3",
+        "label": "Reference link",
+        "type": "url"
+      },
+      {
+        "key": "f4",
+        "label": "Approval request",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Describe the decision",
+      "Provide the supporting material",
+      "Identify the reviewer",
+      "Record their decision",
+      "Notify the project owner"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "vendor-register",
+    "title": "Vendor register",
+    "group": "Operations",
+    "description": "Maintain service-provider details and project context.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Vendor",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Service",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Contact email",
+        "type": "email"
+      },
+      {
+        "key": "f3",
+        "label": "Review date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Service notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Confirm scope of work",
+      "Record the contact",
+      "Review the quote",
+      "Link the agreement",
+      "Review delivery quality"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "asset-register",
+    "title": "Asset register",
+    "group": "Operations",
+    "description": "Catalog approved asset locations and usage notes.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Asset type",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Asset link",
+        "type": "url"
+      },
+      {
+        "key": "f3",
+        "label": "Version",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Usage and permission notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Identify the file version",
+      "Confirm access permissions",
+      "Record permitted use",
+      "Check the asset link",
+      "Archive superseded references"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "label-goals",
+    "title": "Label goals",
+    "group": "Planning",
+    "description": "Turn label priorities into measurable reviewable goals.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Goal owner",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Target date",
+        "type": "date"
+      },
+      {
+        "key": "f2",
+        "label": "Success measure",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Starting point",
+        "type": "text"
+      },
+      {
+        "key": "f4",
+        "label": "Action plan",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Define the outcome",
+      "Record a baseline",
+      "Choose a measure",
+      "Assign an owner",
+      "Review progress regularly"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "decision-log",
+    "title": "Decision log",
+    "group": "Planning",
+    "description": "Preserve important decisions and the reasoning behind them.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Decision date",
+        "type": "date"
+      },
+      {
+        "key": "f2",
+        "label": "Decision maker",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Decision and rationale",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Describe the question",
+      "Record options considered",
+      "Name the decision maker",
+      "Capture the rationale",
+      "Note follow-up conditions"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "risk-register",
+    "title": "Risk register",
+    "group": "Planning",
+    "description": "Record project risks, mitigation steps and review owners.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Project",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Risk owner",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Impact",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Risk and mitigation",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Describe the risk clearly",
+      "Assess the project impact",
+      "Assign a responsible owner",
+      "Record mitigation steps",
+      "Review after circumstances change"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "knowledge-base",
+    "title": "Knowledge base",
+    "group": "Planning",
+    "description": "Keep internal working instructions and recurring answers current.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Topic",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Document owner",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Review date",
+        "type": "date"
+      },
+      {
+        "key": "f3",
+        "label": "Reference link",
+        "type": "url"
+      },
+      {
+        "key": "f4",
+        "label": "Working instructions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Define who uses this guidance",
+      "Write concrete steps",
+      "Link authoritative references",
+      "Assign a review owner",
+      "Update after process changes"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "workflow-templates",
+    "title": "Workflow templates",
+    "group": "Planning",
+    "description": "Build reusable briefs and checklists for recurring label work.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Workflow",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Intended user",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Template owner",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review date",
+        "type": "date"
+      },
+      {
+        "key": "f4",
+        "label": "Reusable template",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Describe when to use it",
+      "List required inputs",
+      "Write the steps",
+      "Define a completion check",
+      "Review after use"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Records are internal. External publishing, email delivery and calendar invitations are completed in their respective services."
+  },
+  {
+    "slug": "delivery-catalog",
+    "title": "Delivery catalog",
+    "group": "Rights & delivery",
+    "description": "Prepare release metadata with identifier checks before marking it ready.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "artist",
+        "label": "Primary artist",
+        "type": "text"
+      },
+      {
+        "key": "isrc",
+        "label": "ISRC \u2014 12 characters, without hyphens",
+        "type": "text"
+      },
+      {
+        "key": "upc",
+        "label": "UPC \u2014 12 digits or EAN \u2014 13 digits",
+        "type": "text"
+      },
+      {
+        "key": "releaseDate",
+        "label": "Release date",
+        "type": "date"
+      },
+      {
+        "key": "master",
+        "label": "Private master reference",
+        "type": "text"
+      },
+      {
+        "key": "artwork",
+        "label": "Artwork reference",
+        "type": "text"
+      },
+      {
+        "key": "credits",
+        "label": "Contributors and credits",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Artist and title approved",
+      "Identifiers verified",
+      "Master reviewed",
+      "Artwork reviewed",
+      "Credits cleared"
+    ],
+    "statuses": [
+      "Draft",
+      "In review",
+      "Ready",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "ownership-splits",
+    "title": "Ownership splits",
+    "group": "Rights & delivery",
+    "description": "One record per work and rights type; reviewed shares must total exactly 100%.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "work",
+        "label": "Work / catalog reference",
+        "type": "text"
+      },
+      {
+        "key": "rightsType",
+        "label": "Rights type \u2014 master or composition",
+        "type": "text"
+      },
+      {
+        "key": "shares",
+        "label": "One owner per line: Name | percentage",
+        "type": "textarea"
+      },
+      {
+        "key": "evidence",
+        "label": "Signed agreement reference",
+        "type": "text"
+      },
+      {
+        "key": "notes",
+        "label": "Review notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "All owners identified",
+      "Percentages agreed",
+      "Signed evidence recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In review",
+      "Approved",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "territory-rights",
+    "title": "Territory rights",
+    "group": "Rights & delivery",
+    "description": "Document where rights apply and when they expire.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "work",
+        "label": "Work / catalog reference",
+        "type": "text"
+      },
+      {
+        "key": "territories",
+        "label": "Territories \u2014 WORLD or comma-separated two-letter codes",
+        "type": "text"
+      },
+      {
+        "key": "start",
+        "label": "Rights start",
+        "type": "date"
+      },
+      {
+        "key": "end",
+        "label": "Rights end (optional)",
+        "type": "date"
+      },
+      {
+        "key": "evidence",
+        "label": "Agreement reference",
+        "type": "text"
+      },
+      {
+        "key": "restrictions",
+        "label": "Exclusions and restrictions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Territories checked",
+      "Term checked",
+      "Agreement reviewed"
+    ],
+    "statuses": [
+      "Draft",
+      "In review",
+      "Approved",
+      "Expired",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "delivery-history",
+    "title": "Delivery history",
+    "group": "Rights & delivery",
+    "description": "Keep distributor submission references and acknowledgments.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "work",
+        "label": "Catalog reference",
+        "type": "text"
+      },
+      {
+        "key": "provider",
+        "label": "Distributor / provider",
+        "type": "text"
+      },
+      {
+        "key": "submitted",
+        "label": "Submission date",
+        "type": "date"
+      },
+      {
+        "key": "reference",
+        "label": "Provider delivery reference",
+        "type": "text"
+      },
+      {
+        "key": "response",
+        "label": "Provider response",
+        "type": "textarea"
+      },
+      {
+        "key": "export",
+        "label": "Export package reference",
+        "type": "text"
+      }
+    ],
+    "checklist": [
+      "Metadata exported",
+      "Delivery reference saved",
+      "Provider acknowledgment checked"
+    ],
+    "statuses": [
+      "Draft",
+      "Submitted",
+      "Accepted",
+      "Rejected",
+      "Complete"
+    ],
+    "note": "This records delivery performed in your distributor account. CSV exports are internal records, not a distributor-approved delivery package."
+  },
+  {
+    "slug": "content-id-review",
+    "title": "Content ID eligibility",
+    "group": "Rights & delivery",
+    "description": "Review exclusive rights and supporting evidence before recording readiness.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "work",
+        "label": "Work / catalog reference",
+        "type": "text"
+      },
+      {
+        "key": "exclusive",
+        "label": "Exclusive rights \u2014 yes, no or unknown",
+        "type": "text"
+      },
+      {
+        "key": "evidence",
+        "label": "Rights evidence reference",
+        "type": "text"
+      },
+      {
+        "key": "audio",
+        "label": "Reference audio location",
+        "type": "text"
+      },
+      {
+        "key": "provider",
+        "label": "Approved partner",
+        "type": "text"
+      },
+      {
+        "key": "claimant",
+        "label": "Claimant ID",
+        "type": "text"
+      },
+      {
+        "key": "restrictions",
+        "label": "Samples, loops and territory restrictions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Exclusive rights confirmed",
+      "Samples and loops reviewed",
+      "Territories checked",
+      "Partner eligibility checked"
+    ],
+    "statuses": [
+      "Draft",
+      "In review",
+      "Eligible",
+      "Ineligible",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "claims-disputes",
+    "title": "Claims & disputes",
+    "group": "Rights & delivery",
+    "description": "Track provider claims, response deadlines and evidence.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "work",
+        "label": "Work / catalog reference",
+        "type": "text"
+      },
+      {
+        "key": "provider",
+        "label": "Provider",
+        "type": "text"
+      },
+      {
+        "key": "claim",
+        "label": "Claim or dispute ID",
+        "type": "text"
+      },
+      {
+        "key": "evidence",
+        "label": "Evidence reference",
+        "type": "text"
+      },
+      {
+        "key": "response",
+        "label": "Response and resolution notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Claim verified",
+      "Evidence reviewed",
+      "Response recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "Open",
+      "Responded",
+      "Resolved",
+      "Escalated"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "takedown-reviews",
+    "title": "Takedown reviews",
+    "group": "Rights & delivery",
+    "description": "Review rights and approval before recording any external request.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "work",
+        "label": "Work / catalog reference",
+        "type": "text"
+      },
+      {
+        "key": "url",
+        "label": "Content URL",
+        "type": "url"
+      },
+      {
+        "key": "evidence",
+        "label": "Rights evidence reference",
+        "type": "text"
+      },
+      {
+        "key": "reason",
+        "label": "Reason and scope",
+        "type": "textarea"
+      },
+      {
+        "key": "reviewer",
+        "label": "Authorized reviewer",
+        "type": "text"
+      },
+      {
+        "key": "reference",
+        "label": "External request reference",
+        "type": "text"
+      }
+    ],
+    "checklist": [
+      "Ownership verified",
+      "Scope checked",
+      "Reviewer approval recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In review",
+      "Approved",
+      "Submitted",
+      "Closed"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "support-cases",
+    "title": "Client support cases",
+    "group": "Service & governance",
+    "description": "Track client issues, response targets and resolutions.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "client",
+        "label": "Client account reference",
+        "type": "text"
+      },
+      {
+        "key": "category",
+        "label": "Issue category",
+        "type": "text"
+      },
+      {
+        "key": "details",
+        "label": "Issue details",
+        "type": "textarea"
+      },
+      {
+        "key": "resolution",
+        "label": "Resolution and follow-up",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Issue acknowledged",
+      "Next action assigned",
+      "Resolution confirmed"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "access-reviews",
+    "title": "Access reviews",
+    "group": "Service & governance",
+    "description": "Document periodic reviews of account permissions.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "account",
+        "label": "Account or team",
+        "type": "text"
+      },
+      {
+        "key": "role",
+        "label": "Current role",
+        "type": "text"
+      },
+      {
+        "key": "decision",
+        "label": "Access decision",
+        "type": "text"
+      },
+      {
+        "key": "evidence",
+        "label": "Review evidence and rationale",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Account owner confirmed",
+      "Permissions reviewed",
+      "Required changes applied in Team & access"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "data-requests",
+    "title": "Privacy requests",
+    "group": "Service & governance",
+    "description": "Record verified access, correction or deletion requests without copying identity documents.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "reference",
+        "label": "Request reference",
+        "type": "text"
+      },
+      {
+        "key": "type",
+        "label": "Request type",
+        "type": "text"
+      },
+      {
+        "key": "received",
+        "label": "Received date",
+        "type": "date"
+      },
+      {
+        "key": "scope",
+        "label": "Requested scope",
+        "type": "textarea"
+      },
+      {
+        "key": "outcome",
+        "label": "Response and outcome",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Identity verified through an appropriate channel",
+      "Scope reviewed",
+      "Response recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "incident-log",
+    "title": "Security incidents",
+    "group": "Service & governance",
+    "description": "Keep investigation notes, containment actions and follow-up work.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "severity",
+        "label": "Severity",
+        "type": "text"
+      },
+      {
+        "key": "detected",
+        "label": "Detected date",
+        "type": "date"
+      },
+      {
+        "key": "impact",
+        "label": "Affected systems and impact",
+        "type": "textarea"
+      },
+      {
+        "key": "actions",
+        "label": "Containment and recovery actions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Impact assessed",
+      "Containment recorded",
+      "Recovery checked",
+      "Follow-up assigned"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "release-retrospectives",
+    "title": "Release retrospectives",
+    "group": "Service & governance",
+    "description": "Turn each completed campaign into a practical improvement record.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "release",
+        "label": "Release reference",
+        "type": "text"
+      },
+      {
+        "key": "results",
+        "label": "Results and sources",
+        "type": "textarea"
+      },
+      {
+        "key": "lessons",
+        "label": "What worked and what to change",
+        "type": "textarea"
+      },
+      {
+        "key": "actions",
+        "label": "Next release actions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Results reviewed",
+      "Team feedback recorded",
+      "Next actions assigned"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "handover-notes",
+    "title": "Team handovers",
+    "group": "Service & governance",
+    "description": "Prepare clear handovers with open work, contacts and next steps.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "from",
+        "label": "Outgoing owner",
+        "type": "text"
+      },
+      {
+        "key": "to",
+        "label": "Incoming owner",
+        "type": "text"
+      },
+      {
+        "key": "scope",
+        "label": "Work and dependencies",
+        "type": "textarea"
+      },
+      {
+        "key": "next",
+        "label": "Next steps and private document references",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Open work listed",
+      "References accessible",
+      "Incoming owner acknowledged"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private working records. Saving does not send messages, transfer rights or submit material to an external service."
+  },
+  {
+    "slug": "security-training",
+    "title": "Security training",
+    "group": "Governance & follow-up",
+    "description": "Track security training with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Participant",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Training topic",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Completion date",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Evidence reference",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "recovery-drills",
+    "title": "Recovery drills",
+    "group": "Governance & follow-up",
+    "description": "Track recovery drills with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "System",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Scenario",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Result",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Follow-up actions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "device-register",
+    "title": "Device register",
+    "group": "Governance & follow-up",
+    "description": "Track device register with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Assigned person",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Device model",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Asset reference",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Security notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "security-exceptions",
+    "title": "Security exceptions",
+    "group": "Governance & follow-up",
+    "description": "Track security exceptions with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Requested exception",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Business reason",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Compensating controls",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review date",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "policy-reviews",
+    "title": "Policy reviews",
+    "group": "Governance & follow-up",
+    "description": "Track policy reviews with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Policy name",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Document reference",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Reviewer",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review findings",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "vendor-access",
+    "title": "Vendor access reviews",
+    "group": "Governance & follow-up",
+    "description": "Track vendor access reviews with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Vendor",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Systems accessed",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Approver",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Removal plan",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "retention-register",
+    "title": "Retention register",
+    "group": "Governance & follow-up",
+    "description": "Track retention register with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Record category",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Storage location",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Retention decision",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "consent-requests",
+    "title": "Consent requests",
+    "group": "Governance & follow-up",
+    "description": "Track consent requests with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Request reference",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Purpose",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Consent evidence",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Withdrawal notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "release-signoffs",
+    "title": "Release sign-offs",
+    "group": "Governance & follow-up",
+    "description": "Track release sign-offs with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Release reference",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Approver",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Decision",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Approval evidence",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "master-deliverables",
+    "title": "Master deliverables",
+    "group": "Governance & follow-up",
+    "description": "Track master deliverables with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Release reference",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Format requirements",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "File reference",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Quality review",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "royalty-reconciliation",
+    "title": "Royalty reconciliation",
+    "group": "Governance & follow-up",
+    "description": "Track royalty reconciliation with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Statement reference",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Currency",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Difference description",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Resolution evidence",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "contract-renewals",
+    "title": "Contract renewals",
+    "group": "Governance & follow-up",
+    "description": "Track contract renewals with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Contract reference",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Counterparty",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Renewal date",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Review decision",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "campaign-reporting",
+    "title": "Campaign reporting",
+    "group": "Governance & follow-up",
+    "description": "Track campaign reporting with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin",
+      "manager"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Campaign reference",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Reporting period",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Results and sources",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Next actions",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  },
+  {
+    "slug": "staff-onboarding",
+    "title": "Staff onboarding",
+    "group": "Governance & follow-up",
+    "description": "Track staff onboarding with a responsible person, due date, supporting references and review status.",
+    "roles": [
+      "owner",
+      "admin"
+    ],
+    "fields": [
+      {
+        "key": "f0",
+        "label": "Staff account",
+        "type": "text"
+      },
+      {
+        "key": "f1",
+        "label": "Role",
+        "type": "text"
+      },
+      {
+        "key": "f2",
+        "label": "Assigned mentor",
+        "type": "text"
+      },
+      {
+        "key": "f3",
+        "label": "Setup notes",
+        "type": "textarea"
+      }
+    ],
+    "checklist": [
+      "Responsible person assigned",
+      "Supporting references recorded",
+      "Review completed",
+      "Follow-up recorded"
+    ],
+    "statuses": [
+      "Draft",
+      "In progress",
+      "In review",
+      "Complete",
+      "On hold"
+    ],
+    "note": "Private tracking records. Saving does not change device settings, revoke access, sign a contract, delete stored data or send payments. Perform those actions in the relevant account tools."
+  }
+]

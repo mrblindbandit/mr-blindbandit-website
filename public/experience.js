@@ -1,0 +1,17 @@
+(()=>{
+ let timer,clockHidden=false;try{clockHidden=localStorage.getItem('bb-clock-hidden')==='true';}catch{}
+ const publicPage=()=>document.body.classList.contains('public-modern')&&!/^\/(portal|owner|community\/(account|dashboard|moderation))(\/|$)/.test(location.pathname);
+ function tick(){const now=new Date();document.querySelectorAll('[data-current-year]').forEach(el=>{const y=String(now.getFullYear());if(el.textContent!==y)el.textContent=y;});const clock=document.querySelector('[data-local-clock]');if(clock&&!clockHidden){clock.dateTime=now.toISOString();clock.textContent=new Intl.DateTimeFormat(undefined,{weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',second:'2-digit',timeZoneName:'short'}).format(now);clock.title='Your device time zone: '+Intl.DateTimeFormat().resolvedOptions().timeZone;}}
+ function schedule(){clearInterval(timer);tick();if(!document.hidden)timer=setInterval(tick,1000);}
+ function init(){if(publicPage()){
+  const header=document.querySelector('body>header');if(header&&!header.querySelector('[data-local-clock]')){const bar=document.createElement('div');bar.className='visitor-clock shell';bar.innerHTML='<span>Your local time</span><time data-local-clock aria-live="off"></time><button type="button" data-clock-toggle>Hide clock</button>';header.prepend(bar);const b=bar.querySelector('[data-clock-toggle]');const draw=()=>{bar.querySelector('time').hidden=clockHidden;b.textContent=clockHidden?'Show clock':'Hide clock';b.setAttribute('aria-expanded',String(!clockHidden));};draw();b.onclick=()=>{clockHidden=!clockHidden;try{localStorage.setItem('bb-clock-hidden',String(clockHidden));}catch{}draw();tick();};}
+  const main=document.querySelector('main'),h=main?.querySelector('h1');
+  if(h&&!main.querySelector('.page-utilities')){const box=document.createElement('div');box.className='page-utilities';const text=main.querySelector('.policy-layout article,.story-copy,.biography-layout article');if(text){const words=(text.textContent||'').trim().split(/\s+/).length;if(words>=180){const reading=document.createElement('span');reading.textContent=Math.max(1,Math.ceil(words/220))+' min read · estimate';box.append(reading);}}
+   const share=document.createElement('button');share.type='button';share.textContent=navigator.share?'Share page':'Copy page link';box.append(share);const status=document.createElement('span');status.setAttribute('role','status');status.className='share-feedback';box.append(status);
+   share.onclick=async()=>{const url=new URL(location.pathname,location.origin).href;try{if(navigator.share)await navigator.share({title:document.title,url});else if(navigator.clipboard){await navigator.clipboard.writeText(url);status.textContent='Page link copied.';}else{let f=box.querySelector('input');if(!f){f=document.createElement('input');f.type='url';f.readOnly=true;f.setAttribute('aria-label','Page link to copy');box.append(f);}f.value=url;f.focus();f.select();status.textContent='Select and copy this link.';}}catch(e){if(e.name!=='AbortError')status.textContent='Sharing was unavailable. Copy the address from your browser.';}};
+   h.after(box);
+  }
+ }
+ schedule();}
+ document.addEventListener('visibilitychange',schedule);window.addEventListener('pageshow',schedule);document.addEventListener('site:navigate',init);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();

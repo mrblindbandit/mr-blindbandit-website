@@ -1,0 +1,52 @@
+[
+  {
+    "slug": "daily-priorities", "title": "Daily priorities", "group": "Daily operations", "description": "Turn each workday into a short, accountable plan with three priorities and a clear end-of-day result.", "roles": ["owner", "admin", "manager", "accountant"],
+    "fields": [{"key":"priority_one","label":"Top priority","type":"text"},{"key":"priority_two","label":"Second priority","type":"text"},{"key":"priority_three","label":"Third priority","type":"text"},{"key":"blockers","label":"Blockers or help needed","type":"textarea"},{"key":"day_result","label":"End-of-day result","type":"textarea"}],
+    "checklist": ["Priorities are specific", "Owners are clear", "Deadlines are realistic", "Blockers were raised", "Day was reviewed"], "statuses": ["Planned", "In progress", "Blocked", "Complete", "Carried forward"], "note": "Use one record per person or team per day. Do not store passwords or authentication codes."
+  },
+  {
+    "slug": "meeting-actions", "title": "Meeting action tracker", "group": "Daily operations", "description": "Capture decisions, owners, due dates, and follow-ups from working meetings.", "roles": ["owner", "admin", "manager", "accountant"],
+    "fields": [{"key":"meeting_date","label":"Meeting date","type":"date"},{"key":"attendees","label":"Attendees","type":"text"},{"key":"decision","label":"Decision or outcome","type":"textarea"},{"key":"next_action","label":"Next action","type":"textarea"},{"key":"reference","label":"Agenda or document link","type":"url"}],
+    "checklist": ["Attendees recorded", "Decision documented", "Action owner assigned", "Due date confirmed", "Follow-up completed"], "statuses": ["Scheduled", "Held", "Actions open", "Waiting", "Closed"], "note": "Record decisions and action items, not private side conversations."
+  },
+  {
+    "slug": "recurring-checklists", "title": "Recurring checklists", "group": "Daily operations", "description": "Track repeatable daily, weekly, monthly, and release-cycle routines.", "roles": ["owner", "admin", "manager", "accountant"],
+    "fields": [{"key":"frequency","label":"Frequency","type":"text"},{"key":"procedure","label":"Procedure","type":"textarea"},{"key":"last_completed","label":"Last completed","type":"date"},{"key":"next_run","label":"Next run","type":"date"},{"key":"evidence","label":"Completion evidence link","type":"url"}],
+    "checklist": ["Procedure is current", "Owner confirmed", "Dependencies ready", "Run completed", "Next run scheduled"], "statuses": ["Active", "Due soon", "Due", "Blocked", "Paused"], "note": "Use this for operational routines that should not rely on memory alone."
+  },
+  {
+    "slug": "team-availability", "title": "Team availability", "group": "People", "description": "Coordinate working hours, leave, coverage, and handoffs without publishing private calendars.", "roles": ["owner", "admin", "manager"],
+    "fields": [{"key":"timezone","label":"Time zone","type":"text"},{"key":"available_hours","label":"Available hours","type":"text"},{"key":"unavailable_dates","label":"Unavailable dates","type":"textarea"},{"key":"coverage","label":"Coverage contact","type":"text"},{"key":"handoff","label":"Handoff notes","type":"textarea"}],
+    "checklist": ["Time zone confirmed", "Hours confirmed", "Leave recorded", "Coverage assigned", "Handoff acknowledged"], "statuses": ["Available", "Limited", "Out of office", "Coverage arranged", "Needs review"], "note": "Keep health details and other sensitive personal information out of availability records."
+  },
+  {
+    "slug": "travel-plans", "title": "Travel plans", "group": "Logistics", "description": "Organize approved business travel, accessibility needs, timing, and essential references.", "roles": ["owner", "admin", "manager"],
+    "fields": [{"key":"destination","label":"Destination","type":"text"},{"key":"departure","label":"Departure date","type":"date"},{"key":"return_date","label":"Return date","type":"date"},{"key":"accessibility","label":"Accessibility or assistance arrangements","type":"textarea"},{"key":"itinerary","label":"Itinerary reference link","type":"url"}],
+    "checklist": ["Travel approved", "Bookings confirmed", "Accessibility arranged", "Emergency contact shared privately", "Receipts archived"], "statuses": ["Proposed", "Approved", "Booked", "In progress", "Complete"], "note": "Store only essential travel details. Never place passport numbers or payment credentials here."
+  },
+  {
+    "slug": "equipment-care", "title": "Equipment care", "group": "Operations", "description": "Schedule inspections, cleaning, repairs, backups, and safe storage for creative equipment.", "roles": ["owner", "admin", "manager"],
+    "fields": [{"key":"equipment","label":"Equipment or asset","type":"text"},{"key":"location","label":"Current location","type":"text"},{"key":"service_date","label":"Service date","type":"date"},{"key":"condition","label":"Condition and issue","type":"textarea"},{"key":"service_reference","label":"Receipt or service link","type":"url"}],
+    "checklist": ["Asset identified", "Condition checked", "Data backed up", "Service completed", "Next inspection scheduled"], "statuses": ["Good", "Inspection due", "Repair needed", "In service", "Retired"], "note": "Do not store device passwords, recovery keys, or full payment information."
+  },
+  {
+    "slug": "purchase-comparisons", "title": "Purchase comparisons", "group": "Finance", "description": "Compare business purchases consistently before approving a vendor or subscription.", "roles": ["owner", "admin", "manager", "accountant"],
+    "fields": [{"key":"need","label":"Business need","type":"textarea"},{"key":"option_a","label":"Option A and price","type":"text"},{"key":"option_b","label":"Option B and price","type":"text"},{"key":"criteria","label":"Decision criteria","type":"textarea"},{"key":"recommendation","label":"Recommendation","type":"textarea"}],
+    "checklist": ["Need validated", "At least two options compared", "Total cost reviewed", "Security and accessibility checked", "Decision approved"], "statuses": ["Researching", "Comparing", "Recommended", "Approved", "Declined"], "note": "Use the expense workflow for payment approval after a decision is made."
+  },
+  {
+    "slug": "call-log", "title": "Call and follow-up log", "group": "Communications", "description": "Keep a concise record of business calls, commitments, and promised follow-ups.", "roles": ["owner", "admin", "manager"],
+    "fields": [{"key":"contact","label":"Person or organization","type":"text"},{"key":"call_date","label":"Call date","type":"date"},{"key":"purpose","label":"Purpose","type":"text"},{"key":"summary","label":"Summary and commitments","type":"textarea"},{"key":"next_step","label":"Next step","type":"textarea"}],
+    "checklist": ["Contact identified", "Consent expectations respected", "Commitments captured", "Follow-up assigned", "Follow-up completed"], "statuses": ["Planned", "Completed", "Follow-up due", "Waiting", "Closed"], "note": "Do not upload call recordings without a lawful basis and clear consent."
+  },
+  {
+    "slug": "important-dates", "title": "Important dates", "group": "Administration", "description": "Track key operational dates, renewals, launches, and reminders in one place.", "roles": ["owner", "admin", "manager", "accountant"],
+    "fields": [{"key":"date_type","label":"Date type","type":"text"},{"key":"event_date","label":"Important date","type":"date"},{"key":"reminder_date","label":"Reminder date","type":"date"},{"key":"impact","label":"Why it matters","type":"textarea"},{"key":"reference","label":"Reference link","type":"url"}],
+    "checklist": ["Date verified", "Owner assigned", "Reminder scheduled", "Dependencies reviewed", "Action completed"], "statuses": ["Upcoming", "Reminder due", "Action needed", "Complete", "Cancelled"], "note": "For legal filing deadlines, confirm dates with a qualified professional."
+  },
+  {
+    "slug": "document-expirations", "title": "Document expirations", "group": "Administration", "description": "Monitor contracts, permits, policies, credentials, and other expiring business documents.", "roles": ["owner", "admin", "manager"],
+    "fields": [{"key":"document_type","label":"Document type","type":"text"},{"key":"holder","label":"Owner or holder","type":"text"},{"key":"expiration","label":"Expiration date","type":"date"},{"key":"renewal_steps","label":"Renewal steps","type":"textarea"},{"key":"secure_reference","label":"Secure document reference link","type":"url"}],
+    "checklist": ["Expiration verified", "Renewal owner assigned", "Requirements collected", "Renewal submitted", "New expiration recorded"], "statuses": ["Current", "Renewal due", "Submitted", "Renewed", "Expired"], "note": "Link to an approved secure repository; do not paste identity numbers into this page."
+  }
+]

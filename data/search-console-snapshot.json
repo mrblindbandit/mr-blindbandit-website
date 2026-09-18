@@ -1,0 +1,56 @@
+{
+  "capturedAt": "2026-09-09T17:29:40.701Z",
+  "property": "sc-domain:mrblindbandit.net",
+  "performance": {
+    "dataMaturity": {
+      "dateBasis": "America/Los_Angeles",
+      "firstIncompleteDate": "2026-09-07",
+      "probe": {
+        "dataState": "all",
+        "endDate": "2026-09-09",
+        "searchType": "web",
+        "startDate": "2026-08-31"
+      },
+      "settledThrough": "2026-09-06",
+      "source": "gsc-api-metadata"
+    },
+    "dataSource": "api",
+    "dimensions": [],
+    "endDate": "2026-09-06",
+    "pagination": {
+      "hasMore": false,
+      "limit": 1,
+      "note": "No rows matched.",
+      "offset": 0,
+      "returned": 0
+    },
+    "rowCount": 0,
+    "rows": [],
+    "searchType": "web",
+    "settledThrough": "2026-09-06",
+    "siteUrl": "sc-domain:mrblindbandit.net",
+    "startDate": "2026-08-10"
+  },
+  "sitemaps": {
+    "siteUrl": "sc-domain:mrblindbandit.net",
+    "sitemaps": [
+      {
+        "contents": [
+          {
+            "indexed": "0",
+            "submitted": "52",
+            "type": "web"
+          }
+        ],
+        "errors": "0",
+        "isPending": false,
+        "isSitemapsIndex": false,
+        "lastDownloaded": "2026-09-08T08:52:44.190Z",
+        "lastSubmitted": "2026-09-08T08:52:42.295Z",
+        "path": "https://mrblindbandit.net/sitemap.xml",
+        "type": "sitemap",
+        "warnings": "0"
+      }
+    ]
+  }
+}
