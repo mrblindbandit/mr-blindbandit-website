@@ -1,58 +1,54 @@
 # AGENTS.md — Blindbandit Website
 
-Instructions for coding agents (Cursor, ChatGPT, Copilot, Claude, etc.) working in this repository.
+> **Other AIs:** start with [`AI_CHANGELOG.md`](./AI_CHANGELOG.md) for work history, then this file for authority and safety.
 
-## For other AIs
+## Mission
 
-**Start here for work history:** [`AI_CHANGELOG.md`](./AI_CHANGELOG.md) — full day log of AI-assisted changes across Blindbandit GitHub.
+You are authorized to **fully maintain and improve** this repository as a senior Blindbandit engineer: features, fixes, docs, CI, refactors, migrations (additive), SEO/content shells, portal/mobile UX, and API work. Prefer shipping complete, professional changes over asking permission for routine work.
 
-## What this repo is
+**Production host:** **ChatGPT Sites** → https://mrblindbandit.net  
+**Static mirror:** https://mrblindbandit.github.io/ (repo `mrblindbandit.github.io`)  
+Do **not** call production “hosted on Cloudflare” as the product host.
 
-Full source for **Blindbandit Records** web platform:
+## Broad access (you MAY)
 
-- Public brand site, Label Portal (`/portal`), Blindbandit Mobile social (`/mobile`)
-- Worker/API under `worker/` (Platform API `/api/v1`)
-- D1 migrations in `drizzle/` (through `0008`)
+- Edit any non-secret source: `worker/`, `public/`, `app/`, `drizzle/` (additive), `docs/`, scripts, tests, README/governance
+- Open/update PRs; merge only when CI is green and change is clearly correct
+- Update `AI_CHANGELOG.md` after substantial AI-assisted work
+- Sync `public/` to Pages mirror when workflows/secrets allow
+- Improve accessibility, performance, security posture, and professionalism
+- Align mobile web (`/mobile`) with native apps + Platform API
 
-## Production host (critical)
+## Hard rails (you MUST NOT)
 
-**ChatGPT Sites (OpenAI Sites)** — custom domain **https://mrblindbandit.net**
+1. **Never commit secrets** — `.env`, PEMs, Clerk `sk_*`, LiveKit secrets, FCM/APNs private keys, service-account JSON, VAPID private keys, vault keys
+2. **Never rewrite applied D1 migrations** — only add new numbered SQL
+3. **Never wipe** legal / privacy / trust-safety / terms content
+4. **Never remove** private-page protection (`protect-private-pages` / `private-pages.ts` flow)
+5. **Never put AdSense** on legal, auth, admin, messages, or calls
+6. **Never force-push `main`** or delete the repo
+7. **Never exfiltrate** credentials to chat, issues, or third parties
+8. Destructive ops (drop tables, mass-delete user data, revoke all sessions) require **explicit human confirmation**
 
-Do **not** describe production as “hosted on Cloudflare” as the product host. Sites provides Worker + D1 + R2 + secrets. GitHub Pages (`https://mrblindbandit.github.io/`) is a **static mirror** of `public/` only.
+## Quality bar
+
+- Match existing architecture; prefer extend over rewrite
+- Keep Label Portal + Social Admin role checks server-side
+- Preserve Clerk production sign-in copy professionalism
+- Run lint/tests when feasible; don’t knowingly break CI
+- Document secret **names** only (`HOSTING_SECRETS.md`)
+
+## Auto-deploy reality
+
+| Target | Auto from this repo? |
+|---|---|
+| GitHub Pages (`mrblindbandit.github.io`) | Workflow `.github/workflows/deploy-github-pages.yml` — needs secret `PAGES_DEPLOY_TOKEN` |
+| **ChatGPT Sites** (`mrblindbandit.net`) | **Not automatic from GitHub** unless Sites is connected to this repo / you redeploy in Sites with a new zip/sync |
 
 ## Related repos
 
-| Repo | Role |
-|---|---|
-| `mrblindbandit/mr-blindbandit-website` | This repo |
-| `mrblindbandit/mrblindbandit.github.io` | Static Pages mirror |
-| `mrblindbandit/mr-blindbandit-mobile` | iOS + Android apps |
-| `mrblindbandit/mrblindbandit` | GitHub profile README |
+- `mrblindbandit/mr-blindbandit-mobile`
+- `mrblindbandit/mrblindbandit` (profile)
+- `mrblindbandit/mrblindbandit.github.io`
 
-## Auth & integrations
-
-- **Clerk**: email + Google on; Apple off for now
-- **LiveKit**: realtime voice/video tokens from Worker
-- **Push**: VAPID + FCM + APNs (secrets on Sites — see `HOSTING_SECRETS.md` names only)
-- Owner/admin emails include `kheckfinancial@gmail.com`, `business@mrblindbandit.net`
-
-## Hard rules
-
-1. Never commit secrets (`.env`, PEMs, service-account JSON, Clerk `sk_`, LiveKit secrets)
-2. Migrations are **additive only** — never rewrite applied SQL
-3. Do not wipe legal / privacy / trust-safety pages
-4. Keep private portal HTML protected (`protect-private-pages` build step)
-5. No AdSense on legal, auth, admin, messages, or calls pages
-6. Prefer updating `AI_CHANGELOG.md` when you make substantial AI-assisted changes
-
-## Read next
-
-- `README.md` — overview
-- `docs/ARCHITECTURE.md` — Sites architecture
-- `docs/API.md` + `docs/openapi.json`
-- `AI_CHANGELOG.md` — what AI agents already changed
-- `SECURITY.md` — vulnerability reporting
-
-## Contact
-
-business@mrblindbandit.net
+Contact: business@mrblindbandit.net
