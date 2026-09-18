@@ -523,8 +523,7 @@ Use Pages for public source transparency and a static preview; use **ChatGPT Sit
 | [`.github/CODEOWNERS`](.github/CODEOWNERS) | Review owners |
 | Issue / PR templates | Under `.github/` |
 
-CI: `.github/workflows/ci.yml`  
-Pages sync (optional secret `PAGES_DEPLOY_TOKEN`): `.github/workflows/deploy-github-pages.yml`
+CI / Pages workflow YAML: [`docs/github-workflows/`](docs/github-workflows/) (copy into `.github/workflows/` once a GitHub token with the `workflow` scope is available — the current OAuth token cannot create workflow files). Optional Pages sync needs secret `PAGES_DEPLOY_TOKEN`.
 
 ## Screenshots
 
