@@ -1,0 +1,31 @@
+name: Deploy public site to GitHub Pages
+
+# Syncs ./public → mrblindbandit/mrblindbandit.github.io (user Pages site).
+# Requires repository secret PAGES_DEPLOY_TOKEN (PAT with contents:write on
+# mrblindbandit.github.io). Production product hosting remains ChatGPT Sites.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - ".github/workflows/deploy-github-pages.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure .nojekyll
+        run: touch public/.nojekyll
+      - name: Deploy to mrblindbandit.github.io
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          external_repository: mrblindbandit/mrblindbandit.github.io
+          publish_branch: main
+          publish_dir: ./public
+          force_orphan: false
+          enable_jekyll: false
+          commit_message: Deploy public site from mr-blindbandit-website
