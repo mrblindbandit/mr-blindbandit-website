@@ -64,3 +64,7 @@ Primary log for **mr-blindbandit-website**. Companion logs exist in:
 ---
 
 *Last expanded: 2026-09-18 — Grok Bot*
+
+
+### AGENTS.md authority pass
+- Updated all four repos' `AGENTS.md` with broad maintain authority + hard safety rails (no secrets, additive migrations, no legal wipe, ChatGPT Sites host clarity, Pages vs Sites auto-deploy notes).
