@@ -1,6 +1,7 @@
 # Hosting secrets checklist (names only)
 
-Add these as **Cloudflare Worker / OpenAI Sites secrets**.  
+Add these as **ChatGPT Sites (OpenAI Sites) project secrets**.
+The production host is ChatGPT Sites (`mrblindbandit.net`), not a separate self-managed Cloudflare account.  
 **Never commit values** to git, client JS, mobile apps’ committed server keys, or the ChatGPT import zip.
 
 ## Clerk (required)

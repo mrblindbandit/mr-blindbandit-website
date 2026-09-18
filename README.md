@@ -3,7 +3,8 @@
 [![Live production](https://img.shields.io/badge/production-mrblindbandit.net-gold?style=flat-square)](https://mrblindbandit.net)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-mrblindbandit.github.io-2088FF?style=flat-square&logo=github)](https://mrblindbandit.github.io/)
 [![Visibility](https://img.shields.io/badge/repo-public-brightgreen?style=flat-square)](https://github.com/mrblindbandit/mr-blindbandit-website)
-[![Stack](https://img.shields.io/badge/stack-Vinext%20%7C%20Cloudflare%20Worker%20%7C%20D1%20%7C%20R2-0A66C2?style=flat-square)](#architecture)
+[![Host](https://img.shields.io/badge/host-ChatGPT%20Sites-10A37F?style=flat-square)](#architecture)
+[![Stack](https://img.shields.io/badge/stack-Vinext%20%7C%20Worker%20%7C%20D1%20%7C%20R2-0A66C2?style=flat-square)](#architecture)
 [![Auth](https://img.shields.io/badge/auth-Clerk-6C47FF?style=flat-square)](#authentication)
 [![Realtime](https://img.shields.io/badge/realtime-LiveKit-1FA2FF?style=flat-square)](#communications--livekit)
 [![Mobile](https://img.shields.io/badge/companion-iOS%20%26%20Android-111111?style=flat-square)](https://github.com/mrblindbandit/mr-blindbandit-mobile)
@@ -40,9 +41,11 @@
 19. [GitHub Pages vs production](#github-pages-vs-production)
 20. [Related repositories](#related-repositories)
 21. [Security practices](#security-practices)
-22. [Operations checklist](#operations-checklist)
-23. [Changelog & docs index](#changelog--docs-index)
-24. [Support](#support)
+22. [Community & governance](#community--governance)
+23. [Screenshots](#screenshots)
+24. [Operations checklist](#operations-checklist)
+25. [Changelog & docs index](#changelog--docs-index)
+26. [Support](#support)
 
 ---
 
@@ -54,10 +57,10 @@ This repository is the **full source** for the Blindbandit Records website and W
 - An **internal Label OS** (`/portal`) for roster, releases, campaigns, contracts, compliance, and moderation bridges
 - **Blindbandit Mobile** (`/mobile`) — open social network with profiles, posts, messaging, calls, monetization, verification, and Social Admin
 - A **versioned Platform API** under `/api/v1` (and `/v1`) for web + native apps
-- **Clerk** identity for social/mobile; production secrets on Cloudflare / OpenAI Sites
+- **Clerk** identity for social/mobile; production secrets on **ChatGPT Sites** (OpenAI Sites)
 - **LiveKit** for realtime voice/video
 - **Web Push (VAPID) + FCM + APNs** wiring for notifications
-- **Cloudflare D1** (SQL) + **R2** (objects) bindings
+- **D1** (SQL) + **R2** (objects) bindings via the Sites project
 
 The companion native apps live in [`mr-blindbandit-mobile`](https://github.com/mrblindbandit/mr-blindbandit-mobile) (iOS + Android flagship with Clerk + LiveKit).
 
@@ -67,7 +70,7 @@ The companion native apps live in [`mr-blindbandit-mobile`](https://github.com/m
 
 | Surface | URL | Notes |
 |---|---|---|
-| Production site | https://mrblindbandit.net | Full Worker + D1 + secrets |
+| Production site | https://mrblindbandit.net | **ChatGPT Sites** — full Worker + D1 + secrets |
 | API (same Worker) | https://mrblindbandit.net/api/v1 | Alias also `/v1` |
 | Documented API host | https://api.mrblindbandit.net/v1 | CORS-ready alias |
 | OpenAPI | https://mrblindbandit.net/openapi.json | Machine-readable |
@@ -123,6 +126,9 @@ Deep **Label Portal** desks spanning roster, releases, campaigns, press, legal h
 
 ## Architecture
 
+**Production host: [ChatGPT Sites](https://chatgpt.com/) (OpenAI Sites)** — custom domain `mrblindbandit.net`.  
+Deep dive: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │  Clients                                                    │
@@ -130,13 +136,14 @@ Deep **Label Portal** desks spanning roster, releases, campaigns, press, legal h
 └───────────────────────────┬─────────────────────────────────┘
                             │ HTTPS
 ┌───────────────────────────▼─────────────────────────────────┐
-│  Cloudflare Worker (Vinext / this repo `worker/`)           │
+│  ChatGPT Sites project (this repo’s Worker + public/)       │
 │  • Static public assets                                     │
 │  • Private HTML gated after auth                            │
 │  • Platform API `/api/v1/*`                                 │
 │  • Clerk session verification                               │
 │  • LiveKit token minting                                    │
 │  • Push fan-out (VAPID / FCM / APNs)                        │
+│  • Sites secrets vault + D1 + R2 bindings                   │
 └───────┬───────────────────┬───────────────────┬─────────────┘
         │                   │                   │
    ┌────▼────┐         ┌────▼────┐         ┌────▼────┐
@@ -149,7 +156,7 @@ Deep **Label Portal** desks spanning roster, releases, campaigns, press, legal h
                                            └──────────┘
 ```
 
-**Important:** GitHub Pages serves only the static frontend. Auth, D1 writes, LiveKit, and push require the production Worker with secrets configured.
+**Important:** GitHub Pages serves only the static frontend. Auth, D1 writes, LiveKit, and push require the **ChatGPT Sites** deployment with secrets configured.
 
 ---
 
@@ -189,11 +196,12 @@ mr-blindbandit-website/
 
 | Layer | Choice |
 |---|---|
-| Runtime | Cloudflare Worker via Vinext / Vite |
+| Host | **ChatGPT Sites** (OpenAI Sites) on `mrblindbandit.net` |
+| Runtime | Sites Worker via Vinext / Vite |
 | UI | Static HTML + progressive JS; React/Next pieces in `app/` |
 | Auth | **Clerk** (production) for social/mobile; portal Clerk sign-in |
-| Database | Cloudflare **D1** + Drizzle ORM |
-| Object storage | Cloudflare **R2** |
+| Database | Sites **D1** + Drizzle ORM |
+| Object storage | Sites **R2** |
 | Realtime | **LiveKit** |
 | Push | Web Push **VAPID**, Android **FCM**, iOS **APNs** |
 | Email | Resend (portal / transactional) |
@@ -388,7 +396,7 @@ Anyone can create a Clerk account and participate (subject to Trust & Safety).
 
 ## Hosting secrets (names only)
 
-Configure on **Cloudflare Worker / OpenAI Sites**. **Never commit values.**
+Configure in the **ChatGPT Sites** project secrets vault. **Never commit values.**
 
 | Group | Names |
 |---|---|
@@ -442,12 +450,12 @@ Copy secret **names** from `HOSTING_SECRETS.md` into your local `.env` / Wrangle
 
 ## Build, test & deploy
 
-### Production (Sites / Cloudflare)
+### Production (ChatGPT Sites)
 
-1. Import or sync this repository to your Sites project (preserve vault key + moderator settings).
-2. Set Worker secrets from `HOSTING_SECRETS.md`.
+1. Import or sync this repository into your **ChatGPT Sites** project (preserve vault key + moderator settings).
+2. Set project secrets from `HOSTING_SECRETS.md`.
 3. Apply D1 migrations through **0008** (especially **0007** and **0008** if upgrading).
-4. Deploy Worker + assets.
+4. Redeploy on Sites.
 5. Verify:
    - `GET /api/v1/system/health`
    - `GET /api/v1/livekit/status`
@@ -468,7 +476,7 @@ That mirror is excellent for browsing marketing/mobile shells; it does **not** r
 
 ## GitHub Pages vs production
 
-| Capability | GitHub Pages | Production Worker |
+| Capability | GitHub Pages | ChatGPT Sites (production) |
 |---|---|---|
 | Static HTML/CSS/JS | ✅ | ✅ |
 | Clerk sessions / social write APIs | ❌ | ✅ |
@@ -477,7 +485,7 @@ That mirror is excellent for browsing marketing/mobile shells; it does **not** r
 | Push send | ❌ | ✅ |
 | Private portal HTML gating | ❌ | ✅ |
 
-Use Pages for public source transparency and a static preview; use `mrblindbandit.net` for the real product.
+Use Pages for public source transparency and a static preview; use **ChatGPT Sites** (`mrblindbandit.net`) for the real product.
 
 ---
 
@@ -503,6 +511,35 @@ Use Pages for public source transparency and a static preview; use `mrblindbandi
 
 ---
 
+
+## Community & governance
+
+| Doc | Purpose |
+|---|---|
+| [`LICENSE`](LICENSE) | Proprietary Blindbandit Records license |
+| [`SECURITY.md`](SECURITY.md) | Private vulnerability reporting |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to contribute |
+| [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Community standards |
+| [`.github/CODEOWNERS`](.github/CODEOWNERS) | Review owners |
+| Issue / PR templates | Under `.github/` |
+
+CI: `.github/workflows/ci.yml`  
+Pages sync (optional secret `PAGES_DEPLOY_TOKEN`): `.github/workflows/deploy-github-pages.yml`
+
+## Screenshots
+
+![Home](docs/screenshots/01-home.png)
+
+![Blindbandit Mobile](docs/screenshots/02-mobile.png)
+
+![Artist profile](docs/screenshots/03-profile.png)
+
+![Label portal](docs/screenshots/04-portal.png)
+
+(Images land in `docs/screenshots/` as they are captured from production / Pages.)
+
+---
+
 ## Operations checklist
 
 - [ ] Clerk production keys set; Google + Email on; Apple off until ready
@@ -513,7 +550,7 @@ Use Pages for public source transparency and a static preview; use `mrblindbandi
 - [ ] D1 migrations applied through `0008`
 - [ ] R2 bucket bound
 - [ ] Moderator emails can open `/mobile/admin/`
-- [ ] Custom domain TLS healthy on `mrblindbandit.net`
+- [ ] ChatGPT Sites project healthy; custom domain TLS on `mrblindbandit.net`
 - [ ] Mobile apps point at production API base
 - [ ] No secrets in the latest export zip / GitHub tree
 
@@ -522,7 +559,9 @@ Use Pages for public source transparency and a static preview; use `mrblindbandi
 ## Changelog & docs index
 
 - [`CHANGELOG.md`](CHANGELOG.md) — release notes (shell expansion, portal deepen, legal merge, social platform, …)
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — ChatGPT Sites architecture
 - [`docs/API.md`](docs/API.md) — Platform API
+- [`docs/openapi.json`](docs/openapi.json) — OpenAPI snapshot
 - [`docs/PUSH_IOS_ANDROID.md`](docs/PUSH_IOS_ANDROID.md) — Mobile push
 - [`docs/label-portal.md`](docs/label-portal.md) — Portal guide
 - [`docs/platform-backend-status.md`](docs/platform-backend-status.md) — Backend status

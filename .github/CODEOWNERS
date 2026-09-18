@@ -1,0 +1,12 @@
+# Blindbandit website — default owners
+*       @mrblindbandit
+
+# Sensitive / production-critical paths
+/worker/                @mrblindbandit
+/drizzle/               @mrblindbandit
+/db/                    @mrblindbandit
+/HOSTING_SECRETS.md     @mrblindbandit
+/.openai/               @mrblindbandit
+/docs/API.md            @mrblindbandit
+/docs/openapi.json      @mrblindbandit
+/.github/               @mrblindbandit
