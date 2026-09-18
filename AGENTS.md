@@ -2,6 +2,10 @@
 
 Instructions for coding agents (Cursor, ChatGPT, Copilot, Claude, etc.) working in this repository.
 
+## For other AIs
+
+**Start here for work history:** [`AI_CHANGELOG.md`](./AI_CHANGELOG.md) — full day log of AI-assisted changes across Blindbandit GitHub.
+
 ## What this repo is
 
 Full source for **Blindbandit Records** web platform:

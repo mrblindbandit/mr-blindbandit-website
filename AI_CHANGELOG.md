@@ -1,36 +1,66 @@
-# AI_CHANGELOG.md — Blindbandit Website
+# AI_CHANGELOG.md
 
-Machine-readable history of **AI-assisted** changes to this repository and related Blindbandit web work. Update this file when agents make substantial changes.
+> **For other AIs / coding agents:** read this file for the full history of AI-assisted work across Blindbandit GitHub. Also read `AGENTS.md` for hard rules. **Do not commit secrets.**
 
-## 2026-09-18
-
-### Packaging & GitHub
-- Full site packaged (~7.6 MB zip) including drizzle **0007** / **0008**
-- Private→**public** GitHub repo `mrblindbandit/mr-blindbandit-website`
-- Static deploy to `mrblindbandit/mrblindbandit.github.io` → https://mrblindbandit.github.io/
-- Zip uploaded to Google Drive (`Blindbandit/` folder) after quota fix
-- Professional README, LICENSE, SECURITY, CONTRIBUTING, CODE_OF_CONDUCT, CODEOWNERS, issue/PR templates
-- `docs/ARCHITECTURE.md`, `docs/openapi.json` snapshot, screenshots under `docs/screenshots/`
-- Hosting language corrected to **ChatGPT Sites** (not Cloudflare-as-host)
-- CI + Pages workflow YAML added under `.github/workflows/` (and mirrored in `docs/github-workflows/`)
-
-### Product / platform
-- Blindbandit Mobile `/mobile` social network (profiles, posts, messaging/calling hooks, monetization, verification)
-- Social Admin + Label Portal controls (ban/suspend/moderate bridges)
-- Push APIs (web VAPID + FCM/APNs wiring) and LiveKit token endpoints
-- Legal master package merge into public + mobile policies
-- Bulk expansion of thin HTML shells (~155 → 0 thin pages)
-- Clerk production framing for portal; legacy 2FA auth direction deprecated for social
-
-### Ops notes still often pending
-- `FCM_SERVICE_ACCOUNT_JSON` on Sites secrets
-- Apple APNs (`APNS_*`) when Apple Developer available
-- D1 apply **0007** then **0008** on Sites if not already applied
-
-## Earlier (2026-09 and prior AI-assisted phases)
-
-See `CHANGELOG.md` for portal deepen, legal merge, media tools, SEO, accessibility, and priority phases documented in `docs/*`.
+Primary log for **mr-blindbandit-website**. Companion logs exist in:
+- https://github.com/mrblindbandit/mr-blindbandit-mobile/blob/main/AI_CHANGELOG.md
+- https://github.com/mrblindbandit/mrblindbandit/blob/main/AI_CHANGELOG.md
+- https://github.com/mrblindbandit/mrblindbandit.github.io/blob/main/AI_CHANGELOG.md
 
 ---
 
-*Agents: append dated sections; never paste secret values.*
+## 2026-09-18 — Full account day (Grok Bot / mr. blindbandit)
+
+### YouTube (@MrBlindbandit)
+- Overnight Studio: long-form + Shorts SEO, cinematic thumbs, playlists, channel keywords/upload defaults, end screens/cards, community poll attempts
+- Viral Short rebuilt with Runway cinematic stills + Clairvoyant Castle audio + SFX; uploaded to channel; MP4 emailed to business@mrblindbandit.net
+
+### GitHub account & access
+- Signed into GitHub as **mrblindbandit** via Google (`kheckfinancial@gmail.com`) — security key / phone approval / GitHub Mobile device code
+- Cursor SCM connected for cloud agents (Cloud Agents limited by plan → direct `gh` / local work used instead)
+- Useful GitHub Apps / Marketplace installs attempted; **latest Renovate install blocked by GitHub sudo-mode 2FA (GitHub Mobile)** — pending user approval
+- Enabled **vulnerability alerts** + **automated security fixes** on all four Blindbandit repos (website, mobile, bio `mrblindbandit`, `mrblindbandit.github.io`)
+
+### Mobile apps (`mr-blindbandit-mobile`)
+- Flagship revamp iOS + Android: Clerk auth (email+Google; Apple off), LiveKit calling/messaging
+- Full DMs: attachments, hold-to-send voice notes, sent/delivered/read/typing receipts
+- Runway UI SFX (ringtones, call, notif ambient packs) + haptics + branded visuals/loaders
+- Privacy policy link to mrblindbandit.net/privacy; store-compliance direction
+- PR **#14** flagship/1.5 path; CI fixes (Kotlin 2.4, compileSdk, LiveKit API, lint workaround, iOS LiveKitService fixes)
+- Local secrets scaffolding; OAuth callback `blindbandit://oauth-callback` allowlisted in Clerk
+
+### Website (`mr-blindbandit-website`) — ChatGPT Sites production
+- Unpacked ChatGPT site zip; **production host = ChatGPT Sites** (`mrblindbandit.net`), not Cloudflare-as-product-host
+- Social `/mobile`: profiles, posts, messaging/calling hooks, monetization, verification, artist profile + Spotify tabs
+- Label Portal / Social Admin controls (ban/suspend/moderate bridges)
+- Platform API `/api/v1`, LiveKit tokens, Web Push VAPID + FCM/APNs wiring
+- Drizzle migrations **0007_social_mobile_platform** + **0008_social_admin_moderation**
+- Legal master package merge; thin HTML shells expanded (~155 → 0)
+- Secrets checklist emailed to business@; FCM service-account + APNs still often pending on Sites
+- Public GitHub repo + static Pages mirror **https://mrblindbandit.github.io/** (`mrblindbandit.github.io`)
+- Zip on Google Drive after quota fix: My Drive → Blindbandit → `mr-blindbandit-for-chatgpt.zip`
+
+### Repo professionalism (website)
+- Full README; LICENSE; SECURITY; CONTRIBUTING; CODE_OF_CONDUCT; CODEOWNERS; issue/PR templates
+- `docs/ARCHITECTURE.md`, `docs/openapi.json`, `docs/screenshots/*`
+- `AGENTS.md`, `AI_CHANGELOG.md`, `.github/copilot-instructions.md`
+- GitHub Actions: `.github/workflows/ci.yml`, `deploy-github-pages.yml`
+
+### Bio / profile repo (`mrblindbandit/mrblindbandit`)
+- Professionalization + AGENTS / AI_CHANGELOG (see that repo’s copies)
+
+### Pages repo (`mrblindbandit.github.io`)
+- Live static frontend deploy; AGENTS / AI_CHANGELOG; governance pass
+
+---
+
+## How other AIs should use this
+
+1. Read **`AI_CHANGELOG.md`** (this file) for what already shipped.
+2. Read **`AGENTS.md`** for constraints (ChatGPT Sites host, no secrets, additive migrations).
+3. Prefer extending existing features over rewriting.
+4. Append a new dated section here after substantial AI-assisted work.
+
+---
+
+*Last expanded: 2026-09-18 — Grok Bot*
