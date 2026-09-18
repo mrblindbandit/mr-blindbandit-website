@@ -68,3 +68,10 @@ Primary log for **mr-blindbandit-website**. Companion logs exist in:
 
 ### AGENTS.md authority pass
 - Updated all four repos' `AGENTS.md` with broad maintain authority + hard safety rails (no secrets, additive migrations, no legal wipe, ChatGPT Sites host clarity, Pages vs Sites auto-deploy notes).
+
+
+### GitHub Marketplace apps (batch)
+- **Renovate** — All repositories — automated dependency update PRs
+- **Imgbot** — All repositories — lossless image optimization PRs
+- **CodeRabbit** — All repositories — AI PR review (stopped before paid trial/card)
+- Plus Dependabot configs already on each repo
