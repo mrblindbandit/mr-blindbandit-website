@@ -54,6 +54,18 @@ Primary log for **mr-blindbandit-website**. Companion logs exist in:
 
 ---
 
+
+## 2026-09-19 — GitHub Pages deployment repair (ChatGPT)
+
+### Pages mirror deployment
+- Diagnosed failed `.github/workflows/deploy-github-pages.yml` run in `mr-blindbandit-website`: `peaceiris/actions-gh-pages` could not deploy to the external Pages repo because `PAGES_DEPLOY_TOKEN` was unavailable.
+- Replaced the dependency on that cross-repository PAT for the active path by adding `.github/workflows/sync-public-site.yml` to `mrblindbandit/mrblindbandit.github.io`.
+- The Pages-owned workflow uses its repository `GITHUB_TOKEN` with `contents: write`, checks out `mrblindbandit/mr-blindbandit-website@main`, synchronizes `source/public/` into the Pages repository, preserves `.nojekyll`, and commits/pushes only when content changed.
+- Sync workflow run **35443965094** completed successfully.
+- Resulting Pages repository commit: **df441ab4fa3a5f3bd47a13b196df923749605a12**.
+- GitHub Pages build/deployment run **35443971400** completed successfully for that commit. The static mirror is therefore published successfully.
+- Production `mrblindbandit.net` remains ChatGPT Sites and is separate from this GitHub Pages mirror.
+
 ## How other AIs should use this
 
 1. Read **`AI_CHANGELOG.md`** (this file) for what already shipped.
@@ -63,7 +75,7 @@ Primary log for **mr-blindbandit-website**. Companion logs exist in:
 
 ---
 
-*Last expanded: 2026-09-18 — Grok Bot*
+*Last expanded: 2026-09-19 — ChatGPT*
 
 
 ### AGENTS.md authority pass
