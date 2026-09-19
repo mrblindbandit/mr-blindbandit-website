@@ -42,7 +42,7 @@ Do **not** call production “hosted on Cloudflare” as the product host.
 
 | Target | Auto from this repo? |
 |---|---|
-| GitHub Pages (`mrblindbandit.github.io`) | Workflow `.github/workflows/deploy-github-pages.yml` — needs secret `PAGES_DEPLOY_TOKEN` |
+| GitHub Pages (`mrblindbandit.github.io`) | **Working.** The Pages repo owns `.github/workflows/sync-public-site.yml`, which checks out this repo, syncs `public/`, commits changes with `GITHUB_TOKEN`, and lets GitHub Pages publish. The old source-repo `deploy-github-pages.yml` still references `PAGES_DEPLOY_TOKEN` and is not the authoritative deployment path. |
 | **ChatGPT Sites** (`mrblindbandit.net`) | **Not automatic from GitHub** unless Sites is connected to this repo / you redeploy in Sites with a new zip/sync |
 
 ## Related repos
