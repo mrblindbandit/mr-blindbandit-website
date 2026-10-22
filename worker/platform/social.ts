@@ -28,10 +28,11 @@ function publicProfile(row:any){
 }
 
 export async function ensureSeedArtist(env:Env){
-  const existing=await q(env,'SELECT id FROM social_profiles WHERE handle=?',ARTIST_HANDLE).first();
+  // Owner may rename the seed artist handle; match by stable id too so the seed INSERT never hits a PK conflict (caused 503 on all public social routes).
+  const existing=await q(env,'SELECT id FROM social_profiles WHERE id=? OR handle=?','profile_mr_blindbandit',ARTIST_HANDLE).first();
   if(existing)return existing.id;
   const now=Date.now();
-  await q(env,"INSERT INTO social_profiles(id,clerk_user_id,email,handle,display_name,bio,avatar_url,cover_url,location,website,verified,verified_at,is_artist,monetization_status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,1,?,1,'approved',?,?)",
+  await q(env,"INSERT OR IGNORE INTO social_profiles(id,clerk_user_id,email,handle,display_name,bio,avatar_url,cover_url,location,website,verified,verified_at,is_artist,monetization_status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,1,?,1,'approved',?,?)",
     'profile_mr_blindbandit','seed:kheckfinancial',OWNER_EMAIL,ARTIST_HANDLE,'Mr. Blindbandit',
     'Blind artist, producer, and founder of Blindbandit Records. Official verified artist profile on Blindbandit Mobile.',
     '/assets/mobile-artist.jpg','/assets/mobile-cover.jpg','Davao del Norte, Philippines','https://mrblindbandit.net',now,now,now).run();
