@@ -9,6 +9,14 @@ Primary log for **mr-blindbandit-website**. Companion logs exist in:
 
 ---
 
+## 2026-10-23 — Site audit fixes (Grok Bot)
+
+- `worker/platform/social.ts`: `ensureSeedArtist` now matches the seed profile by stable id (`profile_mr_blindbandit`) as well as handle, and uses `INSERT OR IGNORE`. Production had renamed the seed handle to `kheck`, so every public `/api/v1/social/*` route (feed, newsfeed, explore, health, profiles) threw a PK conflict -> 503.
+- `public/sitemap.xml`: regenerated (201 URLs, every one verified HTTP 200, indexable, self-canonical on 2026-10-23). Previous static file had 160 URLs and was missing /publications/*, /nonprofit/*, /research/*, /resume/, /credentials/, /links/, /delete-account/.
+- Note: ChatGPT Sites production is NOT built from this repo (deployed commit c98c494 is not in this history); these changes must be ported to the Sites source and redeployed there.
+
+---
+
 ## 2026-09-18 — Full account day (Grok Bot / mr. blindbandit)
 
 ### YouTube (@MrBlindbandit)
