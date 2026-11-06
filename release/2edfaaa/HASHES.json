@@ -1,0 +1,42 @@
+{
+  "source_revision": "2edfaaa98872ac18be5fbf2dcf9cd8c4e98f6a95",
+  "snapshot_sha256": "e2d5a9763e75b3bc62bc02640c9ff87f61dc2db20ff339b9c94340d0dc003536",
+  "github_mirror_do_not_deploy": "e045f9067dd7aa24aa72157cedeb5cd56c4a9025",
+  "files": [
+    {
+      "path": "worker/platform/livekit.ts",
+      "base_sha256": "86e10aa1f0a40ba097c35c08143c0c7dd64df98d40dda546eaf200581b051e18",
+      "patched_sha256": "aa50ae5b72f7f97498969a8694dc8e6ddd9fdd4567779046c00a92fbc3feedcb"
+    },
+    {
+      "path": "worker/platform/rtc-provider.ts",
+      "base_sha256": "ae567a9d30248fe3a2030ee7fb0d383468ce38882b8c81205fa81a89674cffe9",
+      "patched_sha256": "f7cd4d84573618c03b3ee6ff746a2aaf1b28f8baa89d154ffcc4108ca1965a0b"
+    },
+    {
+      "path": "worker/platform/profile-urls.ts",
+      "base_sha256": "96c81ec863ed33b0567a1548b08f7ba0d1de1d4cb9208b725700dcd97bae5602",
+      "patched_sha256": "a96e2ddca98404d63fa3594fbd9c6a429bcdf03585f8d5a4bad3964e0c6242ba"
+    },
+    {
+      "path": "worker/platform/profiles.ts",
+      "base_sha256": "47df60c3ba4ffc3b911d1d9a168957d57050ca2e597c6c091e02d565ec386a2e",
+      "patched_sha256": "45943e3e9c86fe0ea607602c7c3f2bbd56f9adb3d800cfa7216bf5389f70e796"
+    },
+    {
+      "path": "worker/platform/social.ts",
+      "base_sha256": "101242015016dbe2d3a6b24d73ab84e1cd66cbfe0ad27be525b65f679407c20a",
+      "patched_sha256": "435f144399222ccc31155bf0cc5dc9adf50346eab9121c4fe066e4897f741093"
+    },
+    {
+      "path": "worker/platform/social-admin.ts",
+      "base_sha256": "73c430ac150bad81513980438f6eb3f4b2d87de1da95bbe2be9c2d9de7f194e8",
+      "patched_sha256": "8ae777b6521db9006709501b03206a3ddc371bd0fdc7fad229cda9c925330138"
+    },
+    {
+      "path": "worker/platform/bites-feed.ts",
+      "base_sha256": "7450306d76df1e93daea88c8334198f991895294f4530ebe0b66cd2a0072fe53",
+      "patched_sha256": "fafb877903d265d7ea7361a76c98ebdaefbaef72b1fa064a8457d3ab9291f22f"
+    }
+  ]
+}
