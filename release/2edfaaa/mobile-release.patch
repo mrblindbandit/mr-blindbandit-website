@@ -1,0 +1,261 @@
+--- worker/platform/livekit.ts	2026-11-07 02:54:10.000000000 +0000
++++ worker/platform/livekit.ts	2026-11-06 18:55:25.408693103 +0000
+@@ -52,7 +52,7 @@
+ }
+ 
+ /** Mint a LiveKit access token. Secrets: LIVEKIT_API_KEY, LIVEKIT_API_SECRET, optional LIVEKIT_URL. */
+-export async function mintLiveKitToken(env:Env,opts:{identity:string;name?:string;room:string;canPublish?:boolean;canSubscribe?:boolean;ttlSeconds?:number;roomType?:'voice'|'video'|'data';metadata?:string}){
++export async function mintLiveKitToken(env:Env,opts:{identity:string;name?:string;room:string;canPublish?:boolean;canSubscribe?:boolean;ttlSeconds?:number;roomType?:'voice'|'video'|'data';metadata?:string;screenShare?:boolean}){
+   const apiKey=env.LIVEKIT_API_KEY;
+   const apiSecret=env.LIVEKIT_API_SECRET;
+   if(!apiKey||!apiSecret)throw new ApiError(503,'LIVEKIT_NOT_CONFIGURED','LiveKit is not configured. Set LIVEKIT_API_KEY and LIVEKIT_API_SECRET on the Worker.');
+@@ -62,7 +62,8 @@
+   const ttl=Math.min(Math.max(opts.ttlSeconds||3600,60),86400);
+   const header={alg:'HS256',typ:'JWT'};
+   const canPub=opts.canPublish!==false && opts.roomType!=='data';
+-  const video:any={roomJoin:true,room:opts.room,canPublish:canPub,canPublishSources:canPub?['camera','microphone','screen_share','screen_share_audio']:[],canSubscribe:opts.canSubscribe!==false,canPublishData:true};
++  const sources=!canPub?[]:opts.roomType==='voice'?['microphone']:opts.screenShare?['microphone','camera','screen_share','screen_share_audio']:['microphone','camera'];
++  const video:any={roomJoin:true,room:opts.room,canPublish:canPub,canPublishSources:sources,canSubscribe:opts.canSubscribe!==false,canPublishData:opts.roomType==='data'};
+   if(opts.roomType==='data'){video.canPublish=false;}
+   const payload:any={iss:apiKey,sub:opts.identity,nbf:now-10,exp:now+ttl,video,name:opts.name||opts.identity};
+   if(opts.metadata)payload.metadata=String(opts.metadata).slice(0,512);
+--- worker/platform/rtc-provider.ts	2026-11-07 02:54:10.000000000 +0000
++++ worker/platform/rtc-provider.ts	2026-11-06 18:55:32.472663636 +0000
+@@ -10,16 +10,29 @@
+ }
+ async function owner(a:any){if(a.email?.toLowerCase()!=='kheckfinancial@gmail.com')throw new ApiError(403,'OWNER_REQUIRED','Only the owner may change RTC configuration.');}
+ export async function updateRtcConfig(env:Env,a:any,data:any,rid:string){
+- await owner(a);if(data.preferred_provider==='agora'&&!configured(env))throw new ApiError(503,'AGORA_NOT_CONFIGURED','Agora credentials are missing.');
+- await setSetting(env,KEY,{preferred_provider:data.preferred_provider}).run();await audit(env,a.clerkUserId||a.id,'rtc.config.updated',data.preferred_provider,rid).run();return rtcConfig(env);
++ await owner(a);
++ const next=data.preferred_provider||data.provider;
++ if(next!=='agora'&&next!=='livekit')throw new ApiError(400,'INVALID_PROVIDER','provider must be agora or livekit.');
++ if(next==='agora'&&!configured(env))throw new ApiError(503,'AGORA_NOT_CONFIGURED','Agora credentials are missing. The saved provider was not changed.');
++ if(next==='livekit'&&!(env.LIVEKIT_API_KEY&&env.LIVEKIT_API_SECRET))throw new ApiError(503,'LIVEKIT_NOT_CONFIGURED','LiveKit credentials are missing. The saved provider was not changed.');
++ await setSetting(env,KEY,{preferred_provider:next}).run();await audit(env,a.clerkUserId||a.id,'rtc.config.updated',next,rid).run();return rtcConfig(env);
+ }
+ async function schema(env:Env){await q(env,'CREATE TABLE IF NOT EXISTS social_call_rtc(call_id TEXT PRIMARY KEY,provider TEXT NOT NULL CHECK(provider IN (\'livekit\',\'agora\')))').run();}
+ export async function callUsesAgora(env:Env,callId:string){await schema(env);const row=await q(env,'SELECT provider FROM social_call_rtc WHERE call_id=?',callId).first() as any;return row?.provider==='agora';}
+-export async function mintCallRtc(env:Env,opts:{callId:string;identity:string;name?:string;room:string;requestedProvider?:string;canPublish?:boolean;canSubscribe?:boolean;ttlSeconds?:number}){
++export async function mintCallRtc(env:Env,opts:{callId:string;identity:string;name?:string;room:string;requestedProvider?:string;kind?:'voice'|'video';canPublish?:boolean;canSubscribe?:boolean;ttlSeconds?:number}){
+  await schema(env);
+  let row=await q(env,'SELECT provider FROM social_call_rtc WHERE call_id=?',opts.callId).first() as any;
+- if(!row){const config=await rtcConfig(env);const requested=opts.requestedProvider==='agora';if(requested&&config.preferred_provider!=='agora')throw new ApiError(409,'AGORA_NOT_ENABLED','Agora has not been selected by the owner.');const provider=requested?'agora':'livekit';await q(env,'INSERT OR IGNORE INTO social_call_rtc(call_id,provider) VALUES(?,?)',opts.callId,provider).run();row=await q(env,'SELECT provider FROM social_call_rtc WHERE call_id=?',opts.callId).first();}
+- if(row.provider==='livekit')return {...await mintLiveKitToken(env,opts),provider:'livekit'};
++ if(!row){
++  const config=await rtcConfig(env);
++  let provider:string;
++  if(opts.requestedProvider==='agora'){if(!config.agora.configured)throw new ApiError(503,'AGORA_NOT_CONFIGURED','Agora was requested. It is not configured, and this call was not moved to LiveKit.');provider='agora';}
++  else if(opts.requestedProvider==='livekit'){if(!config.livekit.configured)throw new ApiError(503,'LIVEKIT_NOT_CONFIGURED','LiveKit was requested. It is not configured, and this call was not moved to Agora.');provider='livekit';}
++  else provider=config.preferred_provider==='agora'&&config.agora.configured?'agora':'livekit';
++  await q(env,'INSERT OR IGNORE INTO social_call_rtc(call_id,provider) VALUES(?,?)',opts.callId,provider).run();
++  row=await q(env,'SELECT provider FROM social_call_rtc WHERE call_id=?',opts.callId).first();
++ }
++ if(opts.requestedProvider&&opts.requestedProvider!==row.provider)throw new ApiError(409,'PROVIDER_LOCKED','This call is locked to '+row.provider+'. It was not switched.');
++ if(row.provider==='livekit')return {...await mintLiveKitToken(env,{...opts,roomType:opts.kind==='video'?'video':'voice',screenShare:false}),provider:'livekit'};
+  if(!configured(env))throw new ApiError(503,'AGORA_NOT_CONFIGURED','Agora credentials are missing.');
+  const ttl=Math.min(7200,Math.max(60,opts.ttlSeconds||3600));
+  const token=agora.RtcTokenBuilder.buildTokenWithUserAccount(env.AGORA_APP_ID,env.AGORA_APP_CERTIFICATE,opts.room,opts.identity,agora.RtcRole.PUBLISHER,ttl,ttl);
+@@ -29,5 +42,7 @@
+ export function register(add:any){
+  add('GET','/v1/social/rtc/config','social','RTC provider readiness and native client opt-in requirements',undefined,(c:any)=>rtcConfig(c.env));
+  add('GET','/v1/admin/rtc','social_admin','Read RTC provider configuration without secrets',undefined,(c:any)=>rtcConfig(c.env));
+- add('PATCH','/v1/admin/rtc','social_admin','Owner: select preferred provider for capable native clients',z.object({preferred_provider:z.enum(['livekit','agora'])}).strict(),(c:any)=>updateRtcConfig(c.env,c.a,c.data,c.rid));
++ const rtcChoice=z.object({preferred_provider:z.enum(['livekit','agora']).optional(),provider:z.enum(['livekit','agora']).optional()}).strict().refine((v:any)=>!!(v.preferred_provider||v.provider));
++ add('PATCH','/v1/admin/rtc','social_admin','Owner: select preferred provider for capable native clients',rtcChoice,(c:any)=>updateRtcConfig(c.env,c.a,c.data,c.rid));
++ add('PUT','/v1/social/admin/call-rtc','social_admin','Switch preferred RTC provider livekit|agora (owner)',rtcChoice,(c:any)=>updateRtcConfig(c.env,c.a,c.data,c.rid));
+ }
+--- worker/platform/profile-urls.ts	2026-11-07 02:54:10.000000000 +0000
++++ worker/platform/profile-urls.ts	2026-11-06 18:55:26.460688683 +0000
+@@ -1,8 +1,14 @@
+ import {ApiError} from './core';
+ /** Do not fetch arbitrary URLs. Public image fetching is a native-client acceptance check. */
++export function presentProfileUrl(value:unknown){
++ const raw=typeof value==='string'?value.trim():'';
++ if(!raw)return '';
++ if(raw.startsWith('/assets/')||raw.startsWith('/v1/')||raw.startsWith('/api/v1/'))return 'https://mrblindbandit.net'+raw;
++ return raw;
++}
+ export function validateProfileUrl(value:unknown){
+  if(typeof value!=='string'||!value.trim())return;
+- let u:URL;try{u=new URL(value.trim());}catch{throw new ApiError(400,'INVALID_AVATAR_URL','Use an absolute public HTTPS image URL.');}
++ let u:URL;try{u=new URL(presentProfileUrl(value));}catch{throw new ApiError(400,'INVALID_AVATAR_URL','Use an absolute public HTTPS image URL.');}
+  const host=u.hostname.toLowerCase();
+  if(u.protocol!=='https:'||u.username||u.password||u.port&&u.port!=='443'||!host.includes('.')||/^(localhost|127\.|10\.|0\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host)||host.startsWith('[')||host.endsWith('.localhost')||host.endsWith('.local')||host.endsWith('.internal'))throw new ApiError(400,'INVALID_AVATAR_URL','Use an absolute public HTTPS image URL.');
+ }
+--- worker/platform/profiles.ts	2026-11-07 02:54:10.000000000 +0000
++++ worker/platform/profiles.ts	2026-11-06 18:56:41.152399014 +0000
+@@ -1,4 +1,4 @@
+-import {validateProfileUrl} from './profile-urls';
++import {presentProfileUrl,validateProfileUrl} from './profile-urls';
+ import {emitSync,contacts} from './sync';
+ import {ApiError,q,uuid,audit,type Env} from './core';
+ import type {SocialActor} from './auth';
+@@ -12,7 +12,7 @@
+   try{privacy=JSON.parse(row.privacy_json||'{}');}catch{}
+   return {
+     id:row.id,handle:row.handle,display_name:row.display_name,bio:row.bio,
+-    avatar_url:row.avatar_url,cover_url:row.cover_url,location:row.location,website:row.website,
++    avatar_url:presentProfileUrl(row.avatar_url),cover_url:presentProfileUrl(row.cover_url),location:row.location,website:row.website,
+     verified:!!row.verified,is_artist:!!row.is_artist,monetization_status:row.monetization_status,
+     links:Array.isArray(links)?links.slice(0,8):[],privacy,
+     created_at:row.created_at,updated_at:row.updated_at
+@@ -47,7 +47,7 @@
+   validateProfileUrl(data.avatar_url);validateProfileUrl(data.cover_url);
+   const fields:string[]=[];const values:any[]=[];
+   for(const key of ['display_name','bio','avatar_url','cover_url','location','website'] as const){
+-    if(typeof data[key]==='string'){fields.push(key+'=?');values.push(data[key].trim().slice(0,key==='bio'?2000:500));}
++    if(typeof data[key]==='string'){const raw=data[key].trim().slice(0,key==='bio'?2000:500);fields.push(key+'=?');values.push(key==='avatar_url'||key==='cover_url'?presentProfileUrl(raw):raw);}
+   }
+   if(Array.isArray(data.links)){
+     const links=data.links.slice(0,8).map((l:any)=>({label:String(l.label||'').slice(0,40),url:String(l.url||'').slice(0,500)})).filter((l:any)=>l.url);
+--- worker/platform/social.ts	2026-11-07 02:53:04.000000000 +0000
++++ worker/platform/social.ts	2026-11-06 18:56:32.128431714 +0000
+@@ -1,6 +1,6 @@
+ import {mintCallRtc,rtcFields,callUsesAgora,rtcConfig} from './rtc-provider';
+ import {recordOutcome} from './call-outcomes';
+-import {validateProfileUrl} from './profile-urls';
++import {presentProfileUrl,validateProfileUrl} from './profile-urls';
+ import {emitSync,contacts,accountPrefs,typingVisible} from './sync';
+ import {ApiError,q,uuid,audit,page,limit,type Env} from './core';
+ import {indexPostMeta} from './post-meta';
+@@ -41,8 +41,8 @@
+     handle:row.handle,
+     display_name:row.display_name,
+     bio:row.bio,
+-    avatar_url:row.avatar_url,
+-    cover_url:row.cover_url,
++    avatar_url:presentProfileUrl(row.avatar_url),
++    cover_url:presentProfileUrl(row.cover_url),
+     location:row.location,
+     website:row.website,
+     verified:!!row.verified,
+@@ -102,7 +102,7 @@
+   validateProfileUrl(data.avatar_url);validateProfileUrl(data.cover_url);
+   const fields:string[]=[];const values:any[]=[];
+   for(const key of ['display_name','bio','avatar_url','cover_url','location','website'] as const){
+-    if(typeof data[key]==='string'){fields.push(key+'=?');values.push(data[key].trim().slice(0,key==='bio'?2000:500));}
++    if(typeof data[key]==='string'){const raw=data[key].trim().slice(0,key==='bio'?2000:500);fields.push(key+'=?');values.push(key==='avatar_url'||key==='cover_url'?presentProfileUrl(raw):raw);}
+   }
+   if(typeof data.handle==='string'&&data.handle!==me.handle){
+     const handle=data.handle.toLowerCase().trim();
+@@ -150,7 +150,7 @@
+   let viewerId:string|undefined;if(viewer)viewerId=(await q(env,'SELECT id FROM social_profiles WHERE clerk_user_id=?',viewer.clerkUserId).first())?.id;
+   const args:any[]=[],following=mode==='following'&&!!viewerId;
+   let where="p.deleted_at IS NULL AND IFNULL(p.hidden,0)=0";
+-  if(following){where+=" AND (p.author_id=? OR EXISTS(SELECT 1 FROM social_follows f WHERE f.follower_id=? AND f.following_id=p.author_id)) AND p.visibility IN ('public','followers')";args.push(viewerId,viewerId);}else where+=" AND p.visibility='public'";
++  if(following){where+=" AND (p.author_id=? OR EXISTS(SELECT 1 FROM social_follows f WHERE f.follower_id=? AND f.following_id=p.author_id)) AND IFNULL(p.visibility,'public') NOT IN ('private','draft')";args.push(viewerId,viewerId);}else where+=" AND IFNULL(p.visibility,'public') NOT IN ('private','draft','followers') AND NOT EXISTS(SELECT 1 FROM social_reports r WHERE r.target_id=p.id AND r.target_type IN ('post','bite') AND r.status='open')";
+   if(viewerId){where+=' AND NOT EXISTS(SELECT 1 FROM social_blocks b WHERE b.blocker_id=? AND b.blocked_id=p.author_id OR b.blocker_id=p.author_id AND b.blocked_id=?) AND NOT EXISTS(SELECT 1 FROM social_mutes m WHERE m.profile_id=? AND m.muted_id=p.author_id)';args.push(viewerId,viewerId,viewerId);}
+   const rows=(await q(env,"SELECT p.*,pr.handle,pr.display_name,pr.avatar_url,pr.verified FROM social_posts p JOIN social_profiles pr ON pr.id=p.author_id WHERE "+where+" ORDER BY p.created_at DESC,p.id DESC LIMIT ? OFFSET ?",...args,p.limit,p.offset).all()).results||[];
+   const items=await enrichPosts(env,(rows||[]).map((r:any)=>({id:r.id,body:r.body,media:JSON.parse(r.media_json||'[]'),created_at:r.created_at,author:{id:r.author_id,handle:r.handle,display_name:r.display_name,avatar_url:r.avatar_url,verified:!!r.verified}})),viewerId);
+@@ -322,7 +322,7 @@
+  if(previous.fingerprint!==fingerprint)throw new ApiError(409,'IDEMPOTENCY_CONFLICT','This request ID was already used for a different call.');
+  const row=await q(env,'SELECT * FROM social_calls WHERE id=? AND caller_id=?',previous.call_id,me.id).first() as any;
+  if(!row)throw new ApiError(409,'CALL_NOT_AVAILABLE','The original call is no longer available. Use a new request ID.');
+- const live=['ringing','active'].includes(row.status),token=live?await mintCallRtc(env,{callId:row.id,identity:me.id,name:me.display_name,room:row.room_name,canPublish:true,canSubscribe:true,ttlSeconds:7200}):null;
++ const live=['ringing','active'].includes(row.status),token=live?await mintCallRtc(env,{callId:row.id,identity:me.id,name:me.display_name,room:row.room_name,kind:row.kind,canPublish:true,canSubscribe:true,ttlSeconds:7200}):null;
+  const participants=(await q(env,'SELECT p.handle FROM social_call_participants c JOIN social_profiles p ON p.id=c.profile_id WHERE c.call_id=? ORDER BY c.invited_at,p.id',row.id).all()).results||[];
+  return {id:row.id,call_id:row.id,room:row.room_name,kind:row.kind,status:row.status,...rtcFields(token),group_id:row.group_id||null,participant_handles:participants.map((p:any)=>p.handle),idempotent_replay:true};
+ }
+@@ -342,7 +342,6 @@
+   const groupId=group?.id||null;
+   const requestKey=data.client_request_id||null,fingerprint=JSON.stringify({kind,group_id:groupId,recipients:recipients.map(p=>p.id).sort()});
+   if(requestKey){await q(env,'CREATE TABLE IF NOT EXISTS social_call_requests(profile_id TEXT NOT NULL,request_key TEXT NOT NULL,fingerprint TEXT NOT NULL,call_id TEXT NOT NULL,created_at INTEGER NOT NULL,PRIMARY KEY(profile_id,request_key))').run();const previous=await q(env,'SELECT fingerprint,call_id FROM social_call_requests WHERE profile_id=? AND request_key=?',me.id,requestKey).first() as any;if(previous)return replayCallStart(env,me,previous,fingerprint);}
+-  if(data.rtc_provider==='agora'){const config=await rtcConfig(env);if(config.preferred_provider!=='agora'||!config.agora.configured)throw new ApiError(409,'AGORA_NOT_ENABLED','Agora is not enabled for this call.');}
+   try{await env.DB.batch([
+     q(env,"INSERT INTO social_calls(id,room_name,caller_id,callee_id,kind,status,created_at,group_id) VALUES(?,?,?,?,?,'ringing',?,?)",id,room,me.id,recipients[0].id,kind,now,groupId),
+     q(env,"INSERT INTO social_call_participants(call_id,profile_id,state,invited_at,joined_at) VALUES(?,?,'joined',?,?)",id,me.id,now,now),
+@@ -350,12 +349,14 @@
+     ...recipients.map(other=>q(env,"INSERT INTO social_call_participants(call_id,profile_id,state,invited_at) VALUES(?,?,'ringing',?)",id,other.id,now)),
+     ...(requestKey?[q(env,'INSERT INTO social_call_requests VALUES(?,?,?,?,?)',me.id,requestKey,fingerprint,id,now)]:[])
+   ]);}catch(error){if(requestKey&&String(error).includes('social_call_requests')){const previous=await q(env,'SELECT fingerprint,call_id FROM social_call_requests WHERE profile_id=? AND request_key=?',me.id,requestKey).first() as any;if(previous)return replayCallStart(env,me,previous,fingerprint);}throw error;}
+-  const tokenP=mintCallRtc(env,{callId:id,requestedProvider:data.rtc_provider,identity:me.id,name:me.display_name,room,canPublish:true,canSubscribe:true,ttlSeconds:7200});
++  const tokenP=mintCallRtc(env,{callId:id,requestedProvider:data.rtc_provider,identity:me.id,name:me.display_name,room,kind,canPublish:true,canSubscribe:true,ttlSeconds:7200});
+   for(const other of recipients){const current=await q(env,'SELECT status,created_at FROM social_calls WHERE id=?',id).first() as any;if(current?.status!=='ringing'||Number(current.created_at)<=Date.now()-45000)break;await backgroundNotify(ctx,notifyAndDeliver(env,me.id,{user_id:other.id,to_handle:other.handle,created_at:Number(current.created_at),title:kind==='video'?'Incoming video call':'Incoming voice call',body:me.display_name+' is calling',category:'call',call_id:id,kind,from_handle:me.handle,from_name:me.display_name,...(groupId?{group_id:groupId,group_name:group.name}:{}),deep_link:'/mobile/calls/?id='+id},rid));}
+   const token=await tokenP;
+   if(ctx)ctx.waitUntil(expireP.catch(()=>{}));
+   else try{await expireP;}catch{}
+-  return {id,call_id:id,room,kind,status:'ringing',...rtcFields(token),...(groupId?{group_id:groupId,group_name:group.name}:{}),participant_handles:[me.handle,...recipients.map(p=>p.handle)]};
++  const peer=recipients.length===1?recipients[0]:null;
++  const title=group?.name||(peer?.display_name&&!/^\d{4,}$/.test(String(peer.display_name))?peer.display_name:(peer?.handle?'@'+peer.handle:'Group call'));
++  return {id,call_id:id,room,kind,status:'ringing',title,from_name:me.display_name,from_handle:me.handle,caller:{id:me.id,handle:me.handle,display_name:me.display_name,avatar_url:presentProfileUrl(me.avatar_url)},other:peer?{id:peer.id,handle:peer.handle,display_name:peer.display_name,avatar_url:presentProfileUrl(peer.avatar_url)}:null,...rtcFields(token),...(groupId?{group_id:groupId,group_name:group.name}:{}),participant_handles:[me.handle,...recipients.map(p=>p.handle)]};
+ }
+ 
+ export async function incomingCalls(env:Env,actor:SocialActor){
+@@ -391,8 +392,11 @@
+     if(ctx)ctx.waitUntil(notifyOtherDevices);else await notifyOtherDevices;
+   }
+   if(joined){const people=(await q(env,'SELECT profile_id FROM social_call_participants WHERE call_id=?',callId).all()).results||[];await emitSync(env,me.id,people.map((p:any)=>p.profile_id),'call.joined',{call_id:callId,actor_profile_id:me.id},installationId);}
+-  const token=await mintCallRtc(env,{callId:call.id,identity:me.id,name:me.display_name,room:call.room_name,canPublish:true,canSubscribe:true,ttlSeconds:7200});
+-  return {id:call.id,call_id:call.id,room:call.room_name,kind:call.kind,status:'active',...rtcFields(token)};
++  const token=await mintCallRtc(env,{callId:call.id,identity:me.id,name:me.display_name,room:call.room_name,kind:call.kind==='video'?'video':'voice',canPublish:true,canSubscribe:true,ttlSeconds:7200});
++  const peerId=call.caller_id===me.id?call.callee_id:call.caller_id;
++  const peer=await q(env,'SELECT id,handle,display_name,avatar_url FROM social_profiles WHERE id=?',peerId).first() as any;
++  const title=peer?.display_name&&!/^\d{4,}$/.test(String(peer.display_name))?peer.display_name:(peer?.handle?'@'+peer.handle:'Blindbandit caller');
++  return {id:call.id,call_id:call.id,room:call.room_name,kind:call.kind,status:'active',title,from_name:title,from_handle:peer?.handle||'',caller:peer?{id:peer.id,handle:peer.handle,display_name:peer.display_name,avatar_url:presentProfileUrl(peer.avatar_url)}:null,other:peer?{id:peer.id,handle:peer.handle,display_name:peer.display_name,avatar_url:presentProfileUrl(peer.avatar_url)}:null,...rtcFields(token)};
+ }
+ 
+ export async function inviteCall(env:Env,actor:SocialActor,callId:string,handles:string[]){const me=await requireProfile(env,actor);const call=await q(env,"SELECT * FROM social_calls WHERE id=? AND status IN ('ringing','active')",callId).first() as any;if(!call)throw new ApiError(404,'CALL_NOT_FOUND','Call not found.');const own=await q(env,'SELECT 1 AS ok FROM social_call_participants WHERE call_id=? AND profile_id=? AND state IN (\'joined\',\'ringing\')',callId,me.id).first();if(!own)throw new ApiError(403,'FORBIDDEN','Only a call participant can invite people.');const invited=[];for(const handle of [...new Set(handles.map(x=>x.toLowerCase()))].slice(0,50)){const p=await q(env,'SELECT * FROM social_profiles WHERE handle=?',handle).first() as any;if(!p)throw new ApiError(404,'PROFILE_NOT_FOUND','A call invitee was not found.');if(await isBlockedEitherWay(env,me.id,p.id))throw new ApiError(403,'BLOCKED','A blocked profile cannot be invited.');const current=await q(env,'SELECT status,created_at FROM social_calls WHERE id=?',callId).first() as any;if(current?.status!=='ringing'||Number(current.created_at)<=Date.now()-45000)continue;const existing=await q(env,'SELECT state FROM social_call_participants WHERE call_id=? AND profile_id=?',callId,p.id).first() as any;if(existing&&['ringing','joined'].includes(existing.state))continue;await q(env,"INSERT INTO social_call_participants(call_id,profile_id,state,invited_at,joined_at,left_at) VALUES(?,?,'ringing',?,NULL,NULL) ON CONFLICT(call_id,profile_id) DO UPDATE SET state='ringing',invited_at=excluded.invited_at,joined_at=NULL,left_at=NULL",callId,p.id,Date.now()).run();const beforePush=await q(env,'SELECT status,created_at FROM social_calls WHERE id=?',callId).first() as any;if(beforePush?.status==='ringing'&&Number(beforePush.created_at)>Date.now()-45000)try{await notifyAndDeliver(env,me.id,{user_id:p.id,to_handle:p.handle,created_at:Number(beforePush.created_at),title:call.kind==='video'?'Incoming video call':'Incoming voice call',body:me.display_name+' is calling',category:'call',call_id:callId,kind:call.kind,from_handle:me.handle,from_name:me.display_name,...(call.group_id?{group_id:call.group_id}:{}),deep_link:'/mobile/calls/?id='+callId},'call-invite:'+callId+':'+p.id+':'+Date.now());}catch{}invited.push(p.handle);}return {call_id:callId,invited};}
+--- worker/platform/social-admin.ts	2026-11-07 02:54:10.000000000 +0000
++++ worker/platform/social-admin.ts	2026-11-06 18:55:42.416622925 +0000
+@@ -104,8 +104,9 @@
+ export async function suspendUser(env:Env,actor:SocialActor,profileId:string,data:any,rid:string){
+   const profile=await q(env,'SELECT id FROM social_profiles WHERE id=?',profileId).first();
+   if(!profile)throw new ApiError(404,'NOT_FOUND','Profile not found.');
+-  const until=Number(data.until)|| (Date.now()+7*86400000);
+-  if(until<=Date.now())throw new ApiError(400,'INVALID_UNTIL','Suspension end must be in the future.');
++  let until=Number(data.until)|| (Date.now()+7*86400000);
++  if(until>0&&until<1e12)until*=1000;
++  if(until<=Date.now())throw new ApiError(400,'INVALID_UNTIL','Suspension end must be a future time in seconds or milliseconds.');
+   const mod=await upsertModeration(env,profileId,{status:'suspended',ban_reason:(data.reason||'Suspended').slice(0,1000),suspended_until:until},actor);
+   await adminAudit(env,actor,'user.suspend','profile',profileId,{reason:data.reason,until},rid);
+   return {profile_id:profileId,moderation:mod};
+@@ -119,11 +120,12 @@
+ 
+ export async function setRestrictions(env:Env,actor:SocialActor,profileId:string,data:any,rid:string){
+   const patch:any={};
+-  if(typeof data.mute_posts==='boolean')patch.mute_posts=data.mute_posts;
+-  if(typeof data.mute_messages==='boolean')patch.mute_messages=data.mute_messages;
+-  if(typeof data.calls_disabled==='boolean')patch.calls_disabled=data.calls_disabled;
+-  if(typeof data.shadow_restricted==='boolean')patch.shadow_restricted=data.shadow_restricted;
+-  if(typeof data.rate_limit_multiplier==='number')patch.rate_limit_multiplier=Math.min(20,Math.max(1,Math.floor(data.rate_limit_multiplier)));
++  const flag=(value:any)=>typeof value==='boolean'?value:typeof value==='number'?value!==0:typeof value==='string'?['true','1','yes'].includes(value.toLowerCase()):undefined;
++  if(flag(data.mute_posts)!==undefined)patch.mute_posts=flag(data.mute_posts);
++  if(flag(data.mute_messages)!==undefined)patch.mute_messages=flag(data.mute_messages);
++  if(flag(data.calls_disabled)!==undefined)patch.calls_disabled=flag(data.calls_disabled);
++  if(flag(data.shadow_restricted)!==undefined)patch.shadow_restricted=flag(data.shadow_restricted);
++  if(data.rate_limit_multiplier!==undefined&&data.rate_limit_multiplier!=='')patch.rate_limit_multiplier=Math.min(20,Math.max(1,Math.floor(Number(data.rate_limit_multiplier)||1)));
+   if(data.feature_flags&&typeof data.feature_flags==='object')patch.feature_flags=JSON.stringify(data.feature_flags);
+   const mod=await upsertModeration(env,profileId,patch,actor);
+   await adminAudit(env,actor,'user.restrictions','profile',profileId,data,rid);
+--- worker/platform/bites-feed.ts	2026-11-07 02:54:10.000000000 +0000
++++ worker/platform/bites-feed.ts	2026-11-06 18:55:44.276615404 +0000
+@@ -154,8 +154,11 @@
+ }
+ 
+ async function canSeeBite(env:Env,row:any,vid:string){
+-  if(!row||!['public','followers'].includes(row.visibility))return false;
+-  if(row.visibility==='followers'){
++  if(!row)return false;
++  const vis=row.visibility||'public';
++  if(vis==='private'||vis==='draft')return false;
++  if(vis==='shared'&&!vid)return false;
++  if(vis==='followers'){
+     if(!vid)return false;
+     if(row.author_id===vid)return true;
+     const fol=await q(env,'SELECT 1 AS ok FROM social_follows WHERE follower_id=? AND following_id=?',vid,row.author_id).first();
+@@ -192,11 +195,12 @@
+ 
+   let sql=`SELECT p.*,pr.handle,pr.display_name,pr.avatar_url,pr.verified
+     FROM social_posts p JOIN social_profiles pr ON pr.id=p.author_id
+-    WHERE p.deleted_at IS NULL AND IFNULL(p.hidden,0)=0`;
++    WHERE p.deleted_at IS NULL AND IFNULL(p.hidden,0)=0 AND IFNULL(p.visibility,'public') NOT IN ('private','draft')
++      AND NOT EXISTS(SELECT 1 FROM social_reports r WHERE r.target_id=p.id AND r.target_type IN ('post','bite') AND r.status='open')`;
+   const args:any[]=[];
+ 
+   if(scope==='public'){
+-    sql+=` AND p.visibility='public'`;
++    sql+=vid?` AND IFNULL(p.visibility,'public') NOT IN ('followers')`:` AND IFNULL(p.visibility,'public') IN ('public','')`;
+   }else{
+     sql+=` AND (p.author_id=? OR EXISTS(SELECT 1 FROM social_follows f WHERE f.follower_id=? AND f.following_id=p.author_id))
+       AND (p.visibility='public' OR p.author_id=? OR EXISTS(SELECT 1 FROM social_follows f2 WHERE f2.follower_id=? AND f2.following_id=p.author_id))`;
