@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {chooseCallProvider, publishSources, presentProfileUrl, suspensionUntil, restrictionFlag, biteVisible} from '../release/2edfaaa/rules.mjs';
 
 test('explicit Agora is frozen for both peers and is not dropped', () => {
@@ -33,18 +34,34 @@ test('relative profile photos become an https site URL and empty clears', () => 
   assert.equal(presentProfileUrl('https://cdn.example.test/a.jpg'), 'https://cdn.example.test/a.jpg');
 });
 
-test('shared feed hides private draft deleted blocked hidden and reported, and keeps unspecified', () => {
+test('null empty unknown private draft and reported visibility stay hidden', () => {
   const rows = [
+    {id: 'public', visibility: 'public'},
+    {id: 'followers', visibility: 'followers', followerAuthorized: true},
+    {id: 'followers-stranger', visibility: 'followers', followerAuthorized: false},
     {id: 'shared', visibility: 'shared'},
+    {id: 'empty', visibility: ''},
+    {id: 'unknown', visibility: 'unknown'},
     {id: 'legacy'},
+    {id: 'nullvis', visibility: null},
     {id: 'private', visibility: 'private'},
     {id: 'draft', visibility: 'draft'},
-    {id: 'gone', deleted: true},
-    {id: 'hidden', hidden: true},
-    {id: 'blocked', blocked: true},
-    {id: 'reported', reported: true}
+    {id: 'gone', visibility: 'public', deleted: true},
+    {id: 'hidden', visibility: 'public', hidden: true},
+    {id: 'blocked', visibility: 'public', blocked: true},
+    {id: 'reported', visibility: 'public', reported: true}
   ];
-  assert.deepEqual(rows.filter(biteVisible).map(row => row.id), ['shared', 'legacy']);
+  assert.deepEqual(rows.filter(biteVisible).map(row => row.id), ['public', 'followers']);
+});
+
+test('the release patch does not treat missing visibility as public', () => {
+  const patch = readFileSync(new URL('../release/2edfaaa/mobile-release.patch', import.meta.url), 'utf8');
+  for (const forbidden of ["row.visibility||'public'", "IFNULL(p.visibility,'public')", "NOT IN ('private','draft')", "NOT IN ('followers')", "IN ('public','')"]) {
+    assert.equal(patch.includes(forbidden), false, forbidden);
+  }
+  assert.equal(patch.includes("!['public','followers'].includes(row.visibility)"), true);
+  assert.equal(patch.includes("p.visibility='public'"), true);
+  assert.equal(patch.includes("p.visibility IN ('public','followers')"), true);
 });
 
 test('admin suspend and restriction strings are accepted without dropping the action', () => {

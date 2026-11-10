@@ -2,6 +2,7 @@
   "source_revision": "2edfaaa98872ac18be5fbf2dcf9cd8c4e98f6a95",
   "snapshot_sha256": "e2d5a9763e75b3bc62bc02640c9ff87f61dc2db20ff339b9c94340d0dc003536",
   "github_mirror_do_not_deploy": "e045f9067dd7aa24aa72157cedeb5cd56c4a9025",
+  "social_ts_note": "worker/platform/social.ts in the attached 2edfaaa manifest is sha256 101242015016dbe2d3a6b24d73ab84e1cd66cbfe0ad27be525b65f679407c20a (74595 bytes). The current live snapshot 68d2863 serves the same path as 22929ff5d893c4962995183f73e3e0cb6398eed8bfab9a637ba1c66f23e61c60 (74616 bytes). The 21-byte difference is outside these hunks: lines 37-56, 100-139, and 400-785 match, and the previous patch context applies to both. base_sha256 and patched_sha256 below are the live 74616-byte file this patch was regenerated from. The other six files still match the 2edfaaa manifest byte for byte.",
   "files": [
     {
       "path": "worker/platform/livekit.ts",
@@ -25,8 +26,9 @@
     },
     {
       "path": "worker/platform/social.ts",
-      "base_sha256": "101242015016dbe2d3a6b24d73ab84e1cd66cbfe0ad27be525b65f679407c20a",
-      "patched_sha256": "435f144399222ccc31155bf0cc5dc9adf50346eab9121c4fe066e4897f741093"
+      "base_sha256": "22929ff5d893c4962995183f73e3e0cb6398eed8bfab9a637ba1c66f23e61c60",
+      "canonical_2edfaaa_base_sha256": "101242015016dbe2d3a6b24d73ab84e1cd66cbfe0ad27be525b65f679407c20a",
+      "patched_sha256": "83db166abcb3d54ea7a43f6d17a50900ab9e16bd3ba8c6040fd2561596834481"
     },
     {
       "path": "worker/platform/social-admin.ts",
@@ -36,7 +38,7 @@
     {
       "path": "worker/platform/bites-feed.ts",
       "base_sha256": "7450306d76df1e93daea88c8334198f991895294f4530ebe0b66cd2a0072fe53",
-      "patched_sha256": "fafb877903d265d7ea7361a76c98ebdaefbaef72b1fa064a8457d3ab9291f22f"
+      "patched_sha256": "a728f118657bbc2337551604cd239f06d5c66965872abec15d4446cbbf03d7b3"
     }
   ]
 }

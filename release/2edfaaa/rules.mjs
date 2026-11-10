@@ -46,9 +46,10 @@ export function restrictionFlag(value) {
   return undefined;
 }
 
-/** Shared feed. Unspecified visibility stays visible. Private, draft, deleted, blocked, hidden, and open reports do not. */
+/** Fail closed. Only exact public, or followers when the viewer is authorized, is visible. */
 export function biteVisible(row) {
-  if (row.deleted || row.hidden || row.draft || row.blocked || row.reported) return false;
-  if (row.visibility === 'private' || row.visibility === 'draft') return false;
-  return true;
+  if (!row || row.deleted || row.hidden || row.blocked || row.reported) return false;
+  if (row.visibility === 'public') return true;
+  if (row.visibility === 'followers') return row.followerAuthorized === true;
+  return false;
 }
