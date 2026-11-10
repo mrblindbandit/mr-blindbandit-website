@@ -9,6 +9,13 @@ Primary log for **mr-blindbandit-website**. Companion logs exist in:
 
 ---
 
+## 2026-11-10 — Fail-closed feed visibility on the 2edfaaa release patch
+
+- `release/2edfaaa/mobile-release.patch`: public and following feeds keep exact `public` / `followers` allowlists. Removed `row.visibility||'public'`, `IFNULL(p.visibility,'public')`, and visibility `NOT IN` filters. Open reports stay excluded. Call provider freeze, voice microphone-only tokens, absolute avatar URLs, and admin string coercion are unchanged.
+- Not deployed. GitHub `main` is still not the live Worker.
+
+---
+
 ## 2026-10-23 — Site audit fixes (Grok Bot)
 
 - `worker/platform/social.ts`: `ensureSeedArtist` now matches the seed profile by stable id (`profile_mr_blindbandit`) as well as handle, and uses `INSERT OR IGNORE`. Production had renamed the seed handle to `kheck`, so every public `/api/v1/social/*` route (feed, newsfeed, explore, health, profiles) threw a PK conflict -> 503.
