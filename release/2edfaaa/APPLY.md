@@ -15,7 +15,7 @@ Base and patched sha256 for each file: `release/2edfaaa/HASHES.json`
 - `worker/platform/social.ts` — passes call kind into the token; returns `title` / `from_name`; public feed stays `p.visibility='public'`; following feed stays `IN ('public','followers')`; open reports are excluded
 - `worker/platform/profile-urls.ts` and `profiles.ts` — `/assets` and `/v1` photo paths become `https://mrblindbandit.net...`
 - `worker/platform/social-admin.ts` — suspend `until` and restriction flags accept numeric strings
-- `worker/platform/bites-feed.ts` — `canSeeBite` allows only exact `public` or authorized `followers`; public feed stays `p.visibility='public'`; open reports are excluded
+- `worker/platform/bites-feed.ts` — `canSeeBite` allows only exact `public` or authorized `followers`; public feed stays `p.visibility='public'`; home feed is the author or a follower and `p.visibility IN ('public','followers')`; open reports are excluded
 
 Null, empty, unknown, private, draft, and reported visibility stay hidden. There is no `row.visibility||'public'`, no `IFNULL(p.visibility,'public')`, and no visibility `NOT IN` filter.
 

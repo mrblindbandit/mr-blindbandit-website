@@ -38,7 +38,7 @@
     {
       "path": "worker/platform/bites-feed.ts",
       "base_sha256": "7450306d76df1e93daea88c8334198f991895294f4530ebe0b66cd2a0072fe53",
-      "patched_sha256": "a728f118657bbc2337551604cd239f06d5c66965872abec15d4446cbbf03d7b3"
+      "patched_sha256": "ec547f28365b28095a44afe89046a75d08bf202700f5db89c52eb5a82f2dcc92"
     }
   ]
 }

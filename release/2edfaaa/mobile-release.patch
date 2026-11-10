@@ -249,7 +249,7 @@
    return true;
  }
  
-@@ -192,7 +194,8 @@
+@@ -192,15 +194,16 @@
  
    let sql=`SELECT p.*,pr.handle,pr.display_name,pr.avatar_url,pr.verified
      FROM social_posts p JOIN social_profiles pr ON pr.id=p.author_id
@@ -259,3 +259,13 @@
    const args:any[]=[];
  
    if(scope==='public'){
+     sql+=` AND p.visibility='public'`;
+   }else{
+     sql+=` AND (p.author_id=? OR EXISTS(SELECT 1 FROM social_follows f WHERE f.follower_id=? AND f.following_id=p.author_id))
+-      AND (p.visibility='public' OR p.author_id=? OR EXISTS(SELECT 1 FROM social_follows f2 WHERE f2.follower_id=? AND f2.following_id=p.author_id))`;
+-    args.push(vid,vid,vid,vid);
++      AND p.visibility IN ('public','followers')`;
++    args.push(vid,vid);
+   }
+   if(exclude.size){sql+=` AND p.author_id NOT IN (${[...exclude].map(()=>'?').join(',')})`;args.push(...exclude);}
+   if(cursor){
